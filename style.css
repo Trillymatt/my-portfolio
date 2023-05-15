@@ -1,0 +1,25 @@
+body {
+    transition: background-color 0.5s ease;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.light-theme {
+    background-color: #fff;
+    color: #333;
+}
+
+.dark-theme {
+    background-color: #333;
+    color: #fff;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.about, .projects {
+    margin: 20px 0;
+}
