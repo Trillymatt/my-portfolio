@@ -10,6 +10,74 @@ interface TextRevealCardProps {
   className?: string;
 }
 
+const Stars = memo(() => {
+  // Use fixed positions for stars to avoid hydration mismatch
+  const starPositions = [
+    { top: "10%", left: "20%" },
+    { top: "20%", left: "40%" },
+    { top: "30%", left: "60%" },
+    { top: "40%", left: "80%" },
+    { top: "50%", left: "20%" },
+    { top: "60%", left: "40%" },
+    { top: "70%", left: "60%" },
+    { top: "80%", left: "80%" },
+    { top: "90%", left: "20%" },
+    { top: "10%", left: "80%" },
+    { top: "20%", left: "60%" },
+    { top: "30%", left: "40%" },
+    { top: "40%", left: "20%" },
+    { top: "50%", left: "80%" },
+    { top: "60%", left: "60%" },
+    { top: "70%", left: "40%" },
+    { top: "80%", left: "20%" },
+    { top: "90%", left: "80%" },
+    { top: "10%", left: "40%" },
+    { top: "20%", left: "20%" }
+  ];
+
+  return (
+    <div className="absolute inset-0 w-full h-full">
+      {starPositions.map((pos, idx) => (
+        <motion.span
+          key={idx}
+          animate={{
+            top: pos.top,
+            left: pos.left,
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "reverse",
+            delay: idx * 0.1,
+          }}
+          style={{
+            position: "absolute",
+            width: "2px",
+            height: "2px",
+            backgroundColor: "white",
+            borderRadius: "50%",
+            zIndex: 1,
+          }}
+        >
+          <span
+            className="inline-block"
+            style={{
+              position: "absolute",
+              width: "2px",
+              height: "2px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+              zIndex: 1,
+            }}
+          />
+        </motion.span>
+      ))}
+    </div>
+  );
+});
+
+Stars.displayName = "Stars";
+
 export const TextRevealCard = ({
   text,
   revealText,
@@ -110,7 +178,7 @@ export const TextRevealCard = ({
             className="text-base sm:text-[3rem] py-10 font-bold text-white text-center">
             {text}
           </p>
-          <MemoizedStars />
+          <Stars />
         </div>
       </div>
     </div>
@@ -139,42 +207,4 @@ export const TextRevealCardDescription = ({
   className?: string;
 }) => {
   return (<p className={twMerge("text-[#a9a9a9] text-sm", className)}>{children}</p>);
-};
-
-const Stars = () => {
-  const randomMove = () => Math.random() * 4 - 2;
-  const randomOpacity = () => Math.random();
-  const random = () => Math.random();
-  return (
-    <div className="absolute inset-0">
-      {[...Array(80)].map((_, i) => (
-        <motion.span
-          key={`star-${i}`}
-          animate={{
-            top: `calc(${random() * 100}% + ${randomMove()}px)`,
-            left: `calc(${random() * 100}% + ${randomMove()}px)`,
-            opacity: randomOpacity(),
-            scale: [1, 1.2, 0],
-          }}
-          transition={{
-            duration: random() * 10 + 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{
-            position: "absolute",
-            top: `${random() * 100}%`,
-            left: `${random() * 100}%`,
-            width: `2px`,
-            height: `2px`,
-            backgroundColor: "white",
-            borderRadius: "50%",
-            zIndex: 1,
-          }}
-          className="inline-block"></motion.span>
-      ))}
-    </div>
-  );
-};
-
-export const MemoizedStars = memo(Stars); 
+}; 
