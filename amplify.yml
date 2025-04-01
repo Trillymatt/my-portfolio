@@ -3,24 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm cache clean --force
-        - rm -rf node_modules package-lock.json
         - npm install
-        - npm install -g node-gyp
-        - 'node -v'
-        - 'npm -v'
     build:
       commands:
-        - 'echo "Setting up environment variables..."'
-        - 'echo "NODE_ENV=production" > .env.production'
-        - 'echo "NEXT_TELEMETRY_DISABLED=1" >> .env.production'
-        - 'echo "Starting Next.js build..."'
-        - NODE_ENV=production npm run build
-        - 'echo "Build completed"'
-    postBuild:
-      commands:
-        - 'echo "Verifying build output..."'
-        - 'ls -la .next'
+        - npm run build
   artifacts:
     baseDirectory: .next
     files:
@@ -28,8 +14,6 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .next/cache/**/*
-      - .npm/**/*
   customHeaders:
     - pattern: '**/*'
       headers:
