@@ -3,8 +3,6 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { HomeIcon, PersonIcon, FileTextIcon, EnvelopeClosedIcon, CalendarIcon } from "@radix-ui/react-icons"
-
-import { Dock, DockIcon } from "@/components/ui/dock"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 
 export function SiteHeader() {
@@ -12,36 +10,63 @@ export function SiteHeader() {
 
   return (
     <header className="fixed bottom-8 left-0 right-0 z-50">
-      <Dock>
-        <DockIcon asChild>
-          <Link href="/" className={pathname === "/" ? "opacity-100" : "opacity-50 hover:opacity-100 transition-opacity"}>
+      <nav className="mx-auto max-w-2xl px-4">
+        <div className="flex items-center justify-center space-x-6 rounded-full bg-white/10 p-2 backdrop-blur-md dark:bg-black/10">
+          <Link 
+            href="/" 
+            className={`p-2 rounded-full transition-colors ${
+              pathname === "/" 
+                ? "bg-white/20 text-white" 
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
             <HomeIcon className="size-6" />
           </Link>
-        </DockIcon>
-        <DockIcon asChild>
-          <Link href="/about" className={pathname === "/about" ? "opacity-100" : "opacity-50 hover:opacity-100 transition-opacity"}>
+          <Link 
+            href="/about" 
+            className={`p-2 rounded-full transition-colors ${
+              pathname === "/about" 
+                ? "bg-white/20 text-white" 
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
             <PersonIcon className="size-6" />
           </Link>
-        </DockIcon>
-        <DockIcon asChild>
-          <Link href="/projects" className={pathname === "/projects" ? "opacity-100" : "opacity-50 hover:opacity-100 transition-opacity"}>
+          <Link 
+            href="/projects" 
+            className={`p-2 rounded-full transition-colors ${
+              pathname === "/projects" 
+                ? "bg-white/20 text-white" 
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
             <FileTextIcon className="size-6" />
           </Link>
-        </DockIcon>
-        <DockIcon asChild>
-          <Link href="/timeline" className={pathname === "/timeline" ? "opacity-100" : "opacity-50 hover:opacity-100 transition-opacity"}>
+          <Link 
+            href="/timeline" 
+            className={`p-2 rounded-full transition-colors ${
+              pathname === "/timeline" 
+                ? "bg-white/20 text-white" 
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
             <CalendarIcon className="size-6" />
           </Link>
-        </DockIcon>
-        <DockIcon asChild>
-          <Link href="/contact" className={pathname === "/contact" ? "opacity-100" : "opacity-50 hover:opacity-100 transition-opacity"}>
+          <Link 
+            href="/contact" 
+            className={`p-2 rounded-full transition-colors ${
+              pathname === "/contact" 
+                ? "bg-white/20 text-white" 
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
             <EnvelopeClosedIcon className="size-6" />
           </Link>
-        </DockIcon>
-        <DockIcon>
-          <ModeToggle />
-        </DockIcon>
-      </Dock>
+          <div className="p-2">
+            <ModeToggle />
+          </div>
+        </div>
+      </nav>
     </header>
   )
 } 
