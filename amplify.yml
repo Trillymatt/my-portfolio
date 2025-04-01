@@ -4,7 +4,8 @@ frontend:
     preBuild:
       commands:
         - npm cache clean --force
-        - npm ci --no-audit --no-fund
+        - rm -rf node_modules package-lock.json
+        - npm install
         - npm install -g node-gyp
         - 'node -v'
         - 'npm -v'
