@@ -3,7 +3,8 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        - npm cache clean --force
+        - npm ci --no-audit --no-fund
         - npm install -g node-gyp
         - 'node -v'
         - 'npm -v'
@@ -13,7 +14,7 @@ frontend:
         - 'echo "NODE_ENV=production" > .env.production'
         - 'echo "NEXT_TELEMETRY_DISABLED=1" >> .env.production'
         - 'echo "Starting Next.js build..."'
-        - npm run build
+        - NODE_ENV=production npm run build
         - 'echo "Build completed"'
     postBuild:
       commands:
@@ -27,8 +28,13 @@ frontend:
     paths:
       - node_modules/**/*
       - .next/cache/**/*
+      - .npm/**/*
   customHeaders:
     - pattern: '**/*'
       headers:
         - key: 'Cache-Control'
-          value: 'public, max-age=0, must-revalidate' 
+          value: 'public, max-age=0, must-revalidate'
+        - key: 'X-Frame-Options'
+          value: 'DENY'
+        - key: 'X-Content-Type-Options'
+          value: 'nosniff' 
