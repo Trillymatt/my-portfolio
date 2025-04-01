@@ -11,23 +11,22 @@ const nextConfig = {
   // Ensure proper handling of static files
   distDir: '.next',
   generateEtags: true,
-  // Add debugging options
-  webpack: (config, { dev, isServer }) => {
-    // Add source maps in development
-    if (dev) {
-      config.devtool = 'eval-source-map';
-    }
-    return config;
-  },
-  // Ensure proper handling of environment variables
-  env: {
-    NODE_ENV: process.env.NODE_ENV || 'production',
-  },
-  // Add experimental features that might help with build
-  experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['framer-motion'],
-  },
+  // Remove experimental features that might cause issues
+  // experimental: {
+  //   optimizeCss: true,
+  //   optimizePackageImports: ['@radix-ui/react-icons', 'lucide-react'],
+  // },
+  // Remove webpack config as it might cause issues
+  // webpack: (config, { dev, isServer }) => {
+  //   if (!dev && !isServer) {
+  //     config.devtool = 'source-map';
+  //   }
+  //   return config;
+  // },
+  // Remove env config as it's handled by amplify.yml
+  // env: {
+  //   NODE_ENV: process.env.NODE_ENV,
+  // },
 }
 
 module.exports = nextConfig 
