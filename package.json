@@ -9,7 +9,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:debug": "NODE_ENV=production DEBUG=* next build",
+    "build:clean": "rm -rf .next && next build",
+    "build:analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",

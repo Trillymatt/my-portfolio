@@ -5,10 +5,20 @@ frontend:
       commands:
         - npm ci
         - npm install -g node-gyp
+        - echo "Node version: $(node -v)"
+        - echo "NPM version: $(npm -v)"
     build:
       commands:
-        - env | grep -e NODE_ENV -e NEXT_PUBLIC_ >> .env.production
+        - echo "Setting up environment variables..."
+        - echo "NODE_ENV=production" > .env.production
+        - echo "NEXT_TELEMETRY_DISABLED=1" >> .env.production
+        - echo "Starting Next.js build..."
         - npm run build
+        - echo "Build completed"
+    postBuild:
+      commands:
+        - echo "Verifying build output..."
+        - ls -la .next
   artifacts:
     baseDirectory: .next
     files:
