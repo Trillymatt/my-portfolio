@@ -4,8 +4,10 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npm install -g node-gyp
     build:
       commands:
+        - env | grep -e NODE_ENV -e NEXT_PUBLIC_ >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -13,4 +15,10 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/* 
+      - node_modules/**/*
+      - .next/cache/**/*
+  customHeaders:
+    - pattern: '**/*'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=0, must-revalidate' 
