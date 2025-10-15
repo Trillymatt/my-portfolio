@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { HomeIcon, PersonIcon, FileTextIcon, EnvelopeClosedIcon, CalendarIcon, ValueIcon } from "@radix-ui/react-icons"
-import { ModeToggle } from "@/components/ui/mode-toggle"
+// Mode toggle removed per request
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -88,9 +88,7 @@ export function SiteHeader() {
           >
             <EnvelopeClosedIcon className="size-6" />
           </Link>
-          <div className="p-2">
-            <ModeToggle />
-          </div>
+          {/* Theme toggle removed */}
         </div>
       </nav>
     </header>

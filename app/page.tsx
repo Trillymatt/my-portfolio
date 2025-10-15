@@ -56,23 +56,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About */}
-      <section id="about" className="w-full max-w-6xl mx-auto px-4 py-20">
-        <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-bold mb-4 text-center">About</motion.h2>
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-          className="max-w-3xl mx-auto mb-8 text-center"
-        >
-          <TextGenerateEffect
-            words="I am a Computer Science student at the University of North Texas, graduating in May 2026. I’m passionate about entrepreneurship and building practical, high-quality software. Outside of class and client work, I’m a proud parent to a 10‑month‑old, which keeps me focused, organized, and driven to deliver meaningful results."
-          />
-        </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What I Do</p><p className="text-white/70">Design, develop, and deploy high-quality web experiences with React/Next.js.</p></div>
-          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">How I Work</p><p className="text-white/70">Strategy-first, mobile-friendly, performance-focused. Clean code and clear comms.</p></div>
-          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What You Get</p><p className="text-white/70">Fast, SEO-ready, and tailored to your brand and goals.</p></div>
+      {/* Pricing moved up */}
+      <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-20">
+        <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
+        <div className="max-w-3xl mx-auto">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
+              <div className="sm:col-span-1">
+                <p className="text-lg font-semibold">Basic</p>
+              </div>
+              <div className="sm:col-span-2 text-white/90 text-sm leading-6">
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>3–4 Page Website (Home, About, Services, Contact)</li>
+                  <li>Custom Domain & Hosting Setup</li>
+                  <li>Mobile Responsive Design</li>
+                </ul>
+              </div>
+              <div className="sm:col-span-1 flex sm:flex-col justify-between sm:justify-start sm:items-end gap-3">
+                <div>
+                  <p className="text-sm uppercase text-white/60">One-time</p>
+                  <p className="text-2xl font-bold">$400</p>
+                </div>
+                <div>
+                  <p className="text-sm uppercase text-white/60">Ongoing</p>
+                  <p className="text-2xl font-bold">$80<span className="text-base font-medium">/month</span></p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6">
+              <Button className="w-full sm:w-auto" asChild>
+                <a href="#contact">Get Started</a>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -103,24 +119,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
-        <p className="text-white/70 text-center max-w-2xl mx-auto mb-8">Straightforward packages for projects of all sizes. Need something different? I’ll tailor a plan for you.</p>
+      {/* About moved below pricing */}
+      <section id="about" className="w-full max-w-6xl mx-auto px-4 py-20">
+        <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-bold mb-4 text-center">About</motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="max-w-3xl mx-auto mb-8 text-center"
+        >
+          <TextGenerateEffect
+            words="I am a Computer Science student at the University of North Texas, graduating in May 2026. I’m passionate about entrepreneurship and building practical, high-quality software. Outside of class and client work, I’m a proud parent to a 10‑month‑old, which keeps me focused, organized, and driven to deliver meaningful results."
+          />
+        </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {tiers.map((tier) => (
-            <div key={tier.name} className={`rounded-2xl border border-white/10 p-5 ${tier.featured ? "bg-white/10" : "bg-white/5"}`}>
-              <p className="text-lg font-semibold">{tier.name}</p>
-              <p className="text-3xl font-bold mt-1">{tier.price}</p>
-              <p className="text-white/70 mt-1 text-sm">{tier.description}</p>
-              <ul className="mt-4 space-y-1 text-white/80 text-sm">
-                {tier.features.map((f: string) => (
-                  <li key={f} className="flex items-center gap-2"><span className="inline-block w-1.5 h-1.5 rounded-full bg-white/70" />{f}</li>
-                ))}
-              </ul>
-              <div className="mt-5"><Button className="w-full" asChild><a href="#contact">{tier.cta}</a></Button></div>
-            </div>
-          ))}
+          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What I Do</p><p className="text-white/70">Design, develop, and deploy high-quality web experiences with React/Next.js.</p></div>
+          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">How I Work</p><p className="text-white/70">Strategy-first, mobile-friendly, performance-focused. Clean code and clear comms.</p></div>
+          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What You Get</p><p className="text-white/70">Fast, SEO-ready, and tailored to your brand and goals.</p></div>
         </div>
       </section>
 
