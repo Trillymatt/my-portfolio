@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { HomeIcon, PersonIcon, FileTextIcon, EnvelopeClosedIcon, CalendarIcon } from "@radix-ui/react-icons"
+import { HomeIcon, PersonIcon, FileTextIcon, EnvelopeClosedIcon, CalendarIcon, ValueIcon } from "@radix-ui/react-icons"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 
 export function SiteHeader() {
@@ -41,6 +41,16 @@ export function SiteHeader() {
             }`}
           >
             <FileTextIcon className="size-6" />
+          </Link>
+          <Link 
+            href="/pricing" 
+            className={`p-2 rounded-full transition-colors ${
+              pathname === "/pricing" 
+                ? "bg-white/20 text-white" 
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
+            <ValueIcon className="size-6" />
           </Link>
           <Link 
             href="/timeline" 
