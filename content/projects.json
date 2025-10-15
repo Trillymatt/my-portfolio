@@ -1,0 +1,19 @@
+[
+  {
+    "slug": "project-one",
+    "title": "Project One",
+    "tags": ["SaaS", "Next.js"],
+    "image": "/github-profile.png",
+    "blurb": "A performant marketing site with clean, modular UI.",
+    "link": "#"
+  },
+  {
+    "slug": "local-biz",
+    "title": "Local Business",
+    "tags": ["Local Biz", "SEO"],
+    "image": "/github-profile.png",
+    "blurb": "Local business site with booking and analytics.",
+    "link": "#"
+  }
+]
+

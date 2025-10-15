@@ -1,0 +1,33 @@
+[
+  {
+    "name": "Starter Site",
+    "summary": "A polished 3–4 page site to establish credibility",
+    "bullets": [
+      "Mobile-first design",
+      "Fast hosting setup",
+      "On-page SEO",
+      "Contact forms"
+    ]
+  },
+  {
+    "name": "Pro Site",
+    "summary": "A growth-ready site with blog and lead capture",
+    "bullets": [
+      "6–8 pages",
+      "Blog (MDX)",
+      "CMS-ready content model",
+      "Calendly embed"
+    ]
+  },
+  {
+    "name": "AI-Helped Growth",
+    "summary": "Automation and insights to scale smarter",
+    "bullets": [
+      "A/B test scaffolding",
+      "Analytics dashboards",
+      "Conversion experiments",
+      "Copy polish"
+    ]
+  }
+]
+

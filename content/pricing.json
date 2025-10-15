@@ -1,0 +1,62 @@
+{
+  "tiers": [
+    {
+      "name": "Basic",
+      "price": 1200,
+      "pitch": "3–4 page site, built for speed and clarity",
+      "features": [
+        "Mobile-first, responsive",
+        "Fast hosting setup",
+        "On-page SEO",
+        "Analytics installed",
+        "Contact form",
+        "2 revision rounds"
+      ],
+      "badge": "Good start"
+    },
+    {
+      "name": "Premium",
+      "price": 2800,
+      "pitch": "6–8 pages with blog, CMS-ready, and lead capture",
+      "features": [
+        "Everything in Basic",
+        "Blog (MDX)",
+        "CMS-ready content model",
+        "Lead forms + Calendly embed",
+        "Advanced SEO setup",
+        "3 revision rounds"
+      ],
+      "badge": "Most popular"
+    },
+    {
+      "name": "Platinum",
+      "price": 5200,
+      "pitch": "Custom components, animations, and performance budget",
+      "features": [
+        "Everything in Premium",
+        "Custom components + animations",
+        "A/B test scaffolding",
+        "Performance budget",
+        "Copy polish",
+        "Priority support"
+      ],
+      "badge": "Best results"
+    }
+  ],
+  "included": [
+    "Accessibility-first UI",
+    "Optimized images",
+    "Analytics + SEO basics",
+    "Documentation + handoff"
+  ],
+  "carePlan": {
+    "name": "Care Plan",
+    "price": 99,
+    "bullets": [
+      "Uptime monitoring",
+      "Security updates",
+      "Quarterly tune-ups"
+    ]
+  }
+}
+
