@@ -4,20 +4,9 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { TextRevealCard } from "@/components/ui/text-reveal-card"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
-import { Timeline } from "@/components/ui/timeline"
 
 export default function Home() {
-  const timelineData = [
-    { title: "2025", content: "Apple Internship (May 2025 - August 2025)" },
-    { title: "2024", content: "Transferred to University of North Texas. SwiftData Engineer experience at Apple." },
-    { title: "2023", content: "Advanced to Technical Specialist at Apple." },
-    { title: "2022", content: "Transferred to UTA while maintaining role at Apple." },
-    { title: "2021", content: "Roles at JPMorgan Chase and Apple." },
-    { title: "2020", content: "Began at Tarrant County College, CS focus." },
-    { title: "2019", content: "Graduated from Lewisville High School." },
-  ]
 
   const projects = [
     { title: "Client Portfolio", description: "Fast, SEO-optimized portfolio built with Next.js and Tailwind.", href: "#", image: "/github-profile.png", tags: ["Next.js", "Tailwind", "SEO"] },
@@ -53,7 +42,14 @@ export default function Home() {
       {/* Hero */}
       <section id="home" className="w-full max-w-7xl mx-auto px-4 py-20">
         <div className="flex flex-col items-center justify-center space-y-10">
-          <TextRevealCard text="Matthew Norman" revealText="Web Development" className="bg-black border-0" />
+          <motion.h1
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-center font-extrabold tracking-tight text-5xl sm:text-6xl md:text-7xl lg:text-8xl bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
+          >
+            Matthew Norman
+          </motion.h1>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="w-full max-w-2xl text-center">
             <TextGenerateEffect words="I build fast, accessible, and modern websites and web apps using Next.js, React, and Tailwind. Strategy-first, performance-focused, and easy to maintain." />
           </motion.div>
@@ -126,12 +122,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Timeline */}
-      <section id="timeline" className="w-full max-w-5xl mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold mb-6 text-center">My Journey</h2>
-        <Timeline data={timelineData} />
       </section>
 
       {/* Contact */}

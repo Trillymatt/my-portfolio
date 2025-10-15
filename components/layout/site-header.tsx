@@ -12,7 +12,7 @@ export function SiteHeader() {
 
   useEffect(() => {
     if (typeof window === "undefined") return
-    const sectionIds = ["home", "about", "projects", "pricing", "timeline", "contact"]
+    const sectionIds = ["home", "about", "projects", "pricing", "contact"]
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el))
@@ -77,16 +77,7 @@ export function SiteHeader() {
           >
             <ValueIcon className="size-6" />
           </Link>
-          <Link 
-            href="/#timeline" 
-            className={`p-2 rounded-full transition-colors ${
-              (pathname === "/" && activeSection === "timeline") 
-                ? "bg-white/20 text-white" 
-                : "text-white/50 hover:text-white hover:bg-white/10"
-            }`}
-          >
-            <CalendarIcon className="size-6" />
-          </Link>
+          {/* Timeline link removed per request */}
           <Link 
             href="/#contact" 
             className={`p-2 rounded-full transition-colors ${
