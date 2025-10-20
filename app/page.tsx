@@ -38,7 +38,7 @@ export default function Home() {
   }, [isContactOpen])
 
   return (
-    <main className="flex min-h-screen flex-col bg-black text-white pb-28">
+    <main className="flex min-h-screen flex-col text-white pb-28">
       {/* Hero */}
       <section id="home" className="w-full max-w-7xl mx-auto px-4 py-20">
         <div className="flex flex-col items-center justify-center space-y-10">
@@ -50,9 +50,7 @@ export default function Home() {
           >
             Matthew Norman
           </motion.h1>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="w-full max-w-2xl text-center">
-            <TextGenerateEffect words="I build fast, accessible, and modern websites and web apps using Next.js, React, and Tailwind. Strategy-first, performance-focused, and easy to maintain." />
-          </motion.div>
+          
         </div>
       </section>
 

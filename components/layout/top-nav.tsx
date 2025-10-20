@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export function TopNav() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-black/60 backdrop-blur">
+    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[rgba(7,19,32,0.6)] backdrop-blur">
       <div className="mx-auto w-full max-w-7xl px-4 h-14 flex items-center justify-between">
         <Link href="/" className="font-semibold">MN</Link>
         <nav className="hidden md:flex items-center gap-6 text-sm text-white/80">

@@ -3,3 +3,19 @@
 @tailwind utilities; 
 
 html { scroll-behavior: smooth; }
+
+/* Navy dark theme */
+:root {
+  --bg-start: #0b1b2b; /* deep navy */
+  --bg-end: #071320;   /* darker navy */
+  --texture-color: 255 255 255; /* white for overlay dots/lines */
+}
+
+body {
+  background-color: #0b1b2b;
+  background-image:
+    radial-gradient(rgba(var(--texture-color) / 0.04) 1px, transparent 1px),
+    linear-gradient(180deg, var(--bg-start), var(--bg-end));
+  background-size: 24px 24px, 100% 100%;
+  background-attachment: fixed, fixed;
+}
