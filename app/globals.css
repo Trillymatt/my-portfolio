@@ -19,3 +19,9 @@ body {
   background-size: 24px 24px, 100% 100%;
   background-attachment: fixed, fixed;
 }
+
+/* Ensure <option> text is readable on dark selects (browser-dependent) */
+select option {
+  background-color: #0b1b2b;
+  color: #ffffff;
+}

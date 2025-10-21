@@ -4,7 +4,10 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { sendContact } from "@/app/actions/sendContact"
+import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
+import faqs from "@/content/faqs.json"
 
 export default function Home() {
 
@@ -23,9 +26,55 @@ export default function Home() {
   const [status, setStatus] = useState<string | null>(null)
   const [isContactOpen, setIsContactOpen] = useState(false)
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // Prevent auto-scroll to anchored sections on load (clears #hash)
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname)
+      window.scrollTo({ top: 0 })
+    }
+  }, [])
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setStatus("Thanks! I'll get back to you within 1 business day.")
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const result = await sendContact(formData)
+    if (result?.ok) {
+      setStatus("Thanks! I'll get back to you within 1 business day.")
+      try { form.reset() } catch {}
+      // Also open user's mail client with a prefilled email
+      if (typeof window !== "undefined") {
+        const to = "mattknorman@gmail.com" // change to your preferred email
+        const name = String(formData.get("name") || "").trim()
+        const email = String(formData.get("email") || "").trim()
+        const phone = String(formData.get("phone") || "").trim()
+        const company = String(formData.get("company") || "").trim()
+        const type = String(formData.get("type") || "").trim()
+        const budget = String(formData.get("budget") || "").trim()
+        const timeline = String(formData.get("timeline") || "").trim()
+        const message = String(formData.get("message") || "").trim()
+
+        const subject = `New project inquiry from ${name || "Website"}`
+        const bodyLines = [
+          name && `Name: ${name}`,
+          email && `Email: ${email}`,
+          phone && `Phone: ${phone}`,
+          company && `Company: ${company}`,
+          type && `Project Type: ${type}`,
+          budget && `Budget: ${budget}`,
+          timeline && `Timeline: ${timeline}`,
+          "",
+          "Message:",
+          message,
+        ].filter(Boolean)
+        const body = bodyLines.join("\n")
+        const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+        window.location.href = mailto
+      }
+    } else {
+      setStatus("Please review your details and try again.")
+    }
   }
 
   useEffect(() => {
@@ -34,7 +83,13 @@ export default function Home() {
       if (e.key === "Escape") setIsContactOpen(false)
     }
     window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
+    // lock body scroll while modal is open
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      document.body.style.overflow = previousOverflow
+    }
   }, [isContactOpen])
 
   return (
@@ -50,7 +105,26 @@ export default function Home() {
           >
             Matthew Norman
           </motion.h1>
-          
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="text-center text-white/70 text-lg sm:text-xl"
+          >
+            Software Engineer / Entrepreneur
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12 }}
+            className="flex flex-wrap items-center justify-center gap-2"
+          >
+            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🎯 Mission-driven</span>
+            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">👨‍👧 Proud Dad</span>
+            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🎓 Student</span>
+            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🛠️ Builder at heart</span>
+          </motion.div>
         </div>
       </section>
 
@@ -58,7 +132,13 @@ export default function Home() {
       <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
         <div className="max-w-3xl mx-auto">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <motion.div
+            initial={{ opacity: 0, y: -24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="rounded-2xl border border-white/10 bg-white/5 p-6"
+          >
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
               <div className="sm:col-span-1">
                 <p className="text-lg font-semibold">Basic</p>
@@ -73,29 +153,56 @@ export default function Home() {
               <div className="sm:col-span-1 flex sm:flex-col justify-between sm:justify-start sm:items-end gap-3">
                 <div>
                   <p className="text-sm uppercase text-white/60">One-time</p>
-                  <p className="text-2xl font-bold">$400</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xl text-white/50 line-through">$599</span>
+                    <span className="text-2xl font-bold">$399</span>
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm uppercase text-white/60">Ongoing</p>
-                  <p className="text-2xl font-bold">$80<span className="text-base font-medium">/month</span></p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xl text-white/50 line-through">$99</span>
+                    <span className="text-2xl font-bold">$79<span className="text-base font-medium">/month</span></span>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="mt-6">
-              <Button className="w-full sm:w-auto" asChild>
-                <a href="#contact">Get Started</a>
+              <Button
+                className="w-full sm:w-auto"
+                onClick={() => {
+                  setIsContactOpen(true)
+                }}
+              >
+                Get Started
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Projects */}
       <section id="projects" className="w-full max-w-6xl mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold mb-6 text-center">Projects</h2>
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl font-bold mb-6 text-center"
+        >
+          Projects
+        </motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {projects.map((p) => (
-            <a key={p.title} href={p.href} className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition">
+          {projects.map((p, i) => (
+            <motion.a
+              key={p.title}
+              href={p.href}
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.05 }}
+              className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition"
+            >
               {p.image && (
                 <div className="relative w-full h-40">
                   <Image src={p.image} alt={p.title} fill className="object-cover" />
@@ -112,17 +219,25 @@ export default function Home() {
                   </div>
                 )}
               </div>
-            </a>
+            </motion.a>
           ))}
         </div>
       </section>
 
       {/* About moved below pricing */}
       <section id="about" className="w-full max-w-6xl mx-auto px-4 py-20">
-        <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-bold mb-4 text-center">About</motion.h2>
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="text-3xl font-bold mb-4 text-center"
+        >
+          About
+        </motion.h2>
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: -12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ delay: 0.05 }}
           className="max-w-3xl mx-auto mb-8 text-center"
         >
@@ -139,7 +254,15 @@ export default function Home() {
 
       {/* Contact */}
       <section id="contact" className="w-full max-w-xl mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold mb-6 text-center">Contact</h2>
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl font-bold mb-6 text-center"
+        >
+          Contact
+        </motion.h2>
         <p className="text-white/70 text-center mb-6">Ready to discuss your project? Share a few details and I’ll follow up promptly.</p>
         <div className="flex justify-center">
           <Button onClick={() => setIsContactOpen(true)}>contact me</Button>
@@ -148,12 +271,12 @@ export default function Home() {
 
         {isContactOpen && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsContactOpen(false)} />
+            <div className="absolute inset-0 bg-[rgba(7,19,32,0.6)] backdrop-blur-sm" onClick={() => setIsContactOpen(false)} />
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="contact-title"
-              className="relative w-full max-w-lg rounded-2xl bg-neutral-950 border border-white/10 p-6 shadow-xl"
+              className="relative w-full max-w-lg rounded-2xl bg-[rgba(7,19,32,0.95)] border border-white/10 p-6 shadow-xl"
             >
               <div className="flex items-center justify-between mb-2">
                 <h3 id="contact-title" className="text-xl font-semibold">Tell me about your project</h3>
@@ -164,55 +287,64 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm mb-1">Name</label>
-                    <input required name="name" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none" />
+                    <input required name="name" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
                   </div>
                   <div>
                     <label className="block text-sm mb-1">Email</label>
-                    <input required type="email" name="email" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none" />
+                    <input required type="email" name="email" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm mb-1">Phone (optional)</label>
-                    <input name="phone" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none" />
+                    <input name="phone" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
                   </div>
                   <div>
                     <label className="block text-sm mb-1">Company (optional)</label>
-                    <input name="company" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none" />
+                    <input name="company" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <label className="block text-sm mb-1">Project Type</label>
-                    <select name="type" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none">
-                      <option>New Website</option>
-                      <option>Redesign</option>
-                      <option>Web App</option>
-                      <option>Consulting</option>
-                    </select>
+                    <div className="relative">
+                      <select name="type" className="w-full appearance-none rounded-md bg-white/5 border border-white/10 p-2 pr-8 outline-none text-white focus:ring-2 focus:ring-white/20 focus:border-white/20">
+                        <option>New Website</option>
+                        <option>Redesign</option>
+                        <option>Web App</option>
+                        <option>Consulting</option>
+                      </select>
+                      <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm mb-1">Budget</label>
-                    <select name="budget" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none">
-                      <option>$1k–$2k</option>
-                      <option>$2k–$5k</option>
-                      <option>$5k–$10k</option>
-                      <option>$10k+</option>
-                    </select>
+                    <div className="relative">
+                      <select name="budget" className="w-full appearance-none rounded-md bg-white/5 border border-white/10 p-2 pr-8 outline-none text-white focus:ring-2 focus:ring-white/20 focus:border-white/20">
+                        <option>$1k–$2k</option>
+                        <option>$2k–$5k</option>
+                        <option>$5k–$10k</option>
+                        <option>$10k+</option>
+                      </select>
+                      <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm mb-1">Timeline</label>
-                    <select name="timeline" className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none">
-                      <option>ASAP</option>
-                      <option>1–2 months</option>
-                      <option>3–6 months</option>
-                      <option>Flexible</option>
-                    </select>
+                    <div className="relative">
+                      <select name="timeline" className="w-full appearance-none rounded-md bg-white/5 border border-white/10 p-2 pr-8 outline-none text-white focus:ring-2 focus:ring-white/20 focus:border-white/20">
+                        <option>ASAP</option>
+                        <option>1–2 months</option>
+                        <option>3–6 months</option>
+                        <option>Flexible</option>
+                      </select>
+                      <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
+                    </div>
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm mb-1">Project Goals / Message</label>
-                  <textarea required name="message" rows={5} className="w-full rounded-md bg-black/60 border border-white/10 p-2 outline-none" />
+                  <textarea required name="message" rows={5} className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
                 </div>
                 <div className="flex items-center justify-between gap-3 pt-2">
                   <p className="text-white/50 text-xs">I’ll never share your information. You’ll receive a reply within one business day.</p>
@@ -223,6 +355,38 @@ export default function Home() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* FAQs at bottom */}
+      <section id="faqs" className="w-full max-w-3xl mx-auto px-4 py-20">
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl font-bold mb-6 text-center"
+        >
+          FAQs
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: -24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/10"
+        >
+          {faqs.map((item, idx) => (
+            <details key={idx} className="group">
+              <summary className="cursor-pointer list-none p-5 flex items-start justify-between gap-4">
+                <span className="font-medium text-white/90">{item.q}</span>
+                <span className="text-white/50 group-open:rotate-180 transition-transform">⌄</span>
+              </summary>
+              <div className="px-5 pb-5 pt-0 text-white/70">
+                {item.a}
+              </div>
+            </details>
+          ))}
+        </motion.div>
       </section>
     </main>
   )

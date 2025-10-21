@@ -1,27 +1,27 @@
 [
   {
-    "q": "How long does a typical project take?",
-    "a": "Most sites launch in 2–6 weeks depending on scope and feedback speed."
+    "q": "What’s included in a new website build?",
+    "a": "Custom design, responsive pages, performance optimization, basic SEO, and contact integrations."
   },
   {
-    "q": "Do you offer ongoing maintenance?",
-    "a": "Yes — the Care Plan keeps your site secure, updated, and performing well."
+    "q": "How long does a website take to build?",
+    "a": "Most 3–5 page sites launch in 2–4 weeks depending on feedback and content readiness."
   },
   {
-    "q": "What do you need to get started?",
-    "a": "Your goals, key pages, brand assets, and any existing copy or examples you like."
+    "q": "What do you need from me to start?",
+    "a": "Your goals, key pages, brand assets (logo, colors), and any examples you like."
   },
   {
-    "q": "Can you help with copy and images?",
-    "a": "Absolutely. I can assist with light copy polish and recommend image sources."
+    "q": "Can you handle copy and images?",
+    "a": "Yes. I can polish copy and suggest image sources or stock options that fit your brand."
   },
   {
-    "q": "What about SEO?",
-    "a": "All builds include SEO best practices and analytics setup. Advanced SEO is available in higher tiers."
+    "q": "Will my site be optimized for SEO and speed?",
+    "a": "Yes. I use SEO best practices and optimize Core Web Vitals for fast, search-friendly pages."
   },
   {
-    "q": "Do you work with existing sites?",
-    "a": "Yes — I can audit, refine, or rebuild for better performance and conversions."
+    "q": "What happens after launch?",
+    "a": "Optional care plans cover updates, backups, monitoring, and small enhancements as you grow."
   }
 ]
 
