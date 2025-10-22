@@ -8,14 +8,19 @@ import { sendContact } from "@/app/actions/sendContact"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import faqs from "@/content/faqs.json"
+import projectContent from "@/content/projects.json"
+import pricingContent from "@/content/pricing.json"
+import testimonials from "@/content/testimonials.json"
 
 export default function Home() {
 
-  const projects = [
-    { title: "Client Portfolio", description: "Fast, SEO-optimized portfolio built with Next.js and Tailwind.", href: "#", image: "/github-profile.png", tags: ["Next.js", "Tailwind", "SEO"] },
-    { title: "Local Business Site", description: "Responsive site with booking integration and analytics.", href: "#", image: "/github-profile.png", tags: ["Next.js", "Forms", "Analytics"] },
-    { title: "E-commerce Concept", description: "Clean product pages and cart UI.", href: "#", image: "/github-profile.png", tags: ["UI", "Components", "Performance"] },
-  ]
+  const projects = (projectContent as any[]).slice(0, 6).map((p) => ({
+    title: p.title,
+    description: p.blurb,
+    href: `/projects/${p.slug}`,
+    image: p.image,
+    tags: p.tags,
+  }))
 
   const tiers = [
     { name: "Starter", price: "$1,200", description: "For personal brands and small businesses", features: ["1-3 pages", "Responsive design", "Basic SEO", "Contact form", "2 revision rounds"], cta: "Get Started" },
@@ -51,7 +56,6 @@ export default function Home() {
         const phone = String(formData.get("phone") || "").trim()
         const company = String(formData.get("company") || "").trim()
         const type = String(formData.get("type") || "").trim()
-        const budget = String(formData.get("budget") || "").trim()
         const timeline = String(formData.get("timeline") || "").trim()
         const message = String(formData.get("message") || "").trim()
 
@@ -62,7 +66,7 @@ export default function Home() {
           phone && `Phone: ${phone}`,
           company && `Company: ${company}`,
           type && `Project Type: ${type}`,
-          budget && `Budget: ${budget}`,
+          
           timeline && `Timeline: ${timeline}`,
           "",
           "Message:",
@@ -125,59 +129,92 @@ export default function Home() {
             <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🎓 Student</span>
             <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🛠️ Builder at heart</span>
           </motion.div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button
+              className="px-5"
+              onClick={() => setIsContactOpen(true)}
+              aria-label="Schedule a free consultation"
+            >
+              Schedule a Free Consultation
+            </Button>
+            <Button
+              variant="outline"
+              className="px-5 border-white/30 text-white hover:bg-white/10"
+              onClick={() => { const el = document.getElementById("projects"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }) }}
+              aria-label="View my work"
+            >
+              View My Work
+            </Button>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="Download my résumé">Download Résumé</a>
+            <a href="https://github.com/mattknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View GitHub profile">GitHub</a>
+            <a href="https://www.linkedin.com/in/mattknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View LinkedIn profile">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills & Technology */}
+      <section id="skills" className="w-full max-w-6xl mx-auto px-4 py-20">
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl font-bold mb-6 text-center"
+        >
+          Skills & Technology
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">Languages</p>
+            <p className="text-white/70 mt-1 text-sm">JavaScript/TypeScript, Python, SQL</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">Frameworks</p>
+            <p className="text-white/70 mt-1 text-sm">React, Next.js, Node</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">Tools & Testing</p>
+            <p className="text-white/70 mt-1 text-sm">Git, CI/CD, Jest/RTL, Analytics</p>
+          </div>
         </div>
       </section>
 
       {/* Pricing moved up */}
       <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: -24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="rounded-2xl border border-white/10 bg-white/5 p-6"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
-              <div className="sm:col-span-1">
-                <p className="text-lg font-semibold">Basic</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {(pricingContent as any).tiers.map((tier: any, idx: number) => (
+            <motion.div key={tier.name}
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.05 }}
+              className="rounded-2xl border border-white/10 bg-white/5 p-6"
+            >
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="text-xl font-semibold">{tier.name}</h3>
+                {tier.badge && <span className="text-xs px-2 py-0.5 rounded-full bg:white/10 border border-white/10">{tier.badge}</span>}
               </div>
-              <div className="sm:col-span-2 text-white/90 text-sm leading-6">
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>3–4 Page Website (Home, About, Services, Contact)</li>
-                  <li>Custom Domain & Hosting Setup</li>
-                  <li>Mobile Responsive Design</li>
-                </ul>
+              <p className="text-white/80 mt-1">{tier.pitch}</p>
+              <p className="mt-3 text-3xl font-bold">${tier.price.toLocaleString()}</p>
+              <p className="text-xs text-white/60 mt-1">Approx. timeline: {tier.name === 'Basic' ? '2–3 weeks' : tier.name === 'Premium' ? '3–6 weeks' : '6–8 weeks'}</p>
+              <ul className="mt-4 list-disc pl-5 space-y-1 text-white/80 text-sm">
+                {tier.features.map((f: string) => <li key={f}>{f}</li>)}
+              </ul>
+              <div className="mt-5">
+                <Button className="w-full" onClick={() => setIsContactOpen(true)}>Get a quote</Button>
               </div>
-              <div className="sm:col-span-1 flex sm:flex-col justify-between sm:justify-start sm:items-end gap-3">
-                <div>
-                  <p className="text-sm uppercase text-white/60">One-time</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xl text-white/50 line-through">$599</span>
-                    <span className="text-2xl font-bold">$399</span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm uppercase text-white/60">Ongoing</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xl text-white/50 line-through">$99</span>
-                    <span className="text-2xl font-bold">$79<span className="text-base font-medium">/month</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6">
-              <Button
-                className="w-full sm:w-auto"
-                onClick={() => {
-                  setIsContactOpen(true)
-                }}
-              >
-                Get Started
-              </Button>
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
+        </div>
+        <div className="max-w-3xl mx-auto mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
+          <p className="font-semibold">Additional services (separate fees)</p>
+          <ul className="list-disc pl-5 text-white/80 text-sm mt-2 space-y-1">
+            <li>Copywriting</li>
+            <li>Branding & visual identity</li>
+            <li>Photography & custom assets</li>
+            <li>Advanced SEO audits</li>
+          </ul>
         </div>
       </section>
 
@@ -213,7 +250,7 @@ export default function Home() {
                 <p className="text-white/70 text-sm mt-1">{p.description}</p>
                 {p.tags && (
                   <div className="flex flex-wrap gap-2 mt-3">
-                    {p.tags.map((t) => (
+                    {p.tags.map((t: string) => (
                       <span key={t} className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-white/80 border border-white/10">{t}</span>
                     ))}
                   </div>
@@ -249,6 +286,27 @@ export default function Home() {
           <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What I Do</p><p className="text-white/70">Design, develop, and deploy high-quality web experiences with React/Next.js.</p></div>
           <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">How I Work</p><p className="text-white/70">Strategy-first, mobile-friendly, performance-focused. Clean code and clear comms.</p></div>
           <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What You Get</p><p className="text-white/70">Fast, SEO-ready, and tailored to your brand and goals.</p></div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="w-full max-w-6xl mx-auto px-4 py-20">
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl font-bold mb-6 text-center"
+        >
+          Testimonials
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {(testimonials as any[]).map((t: any) => (
+            <div key={t.quote} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-white/90">“{t.quote}”</p>
+              <p className="text-white/60 mt-3 text-sm">— {t.author}, {t.role}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -304,7 +362,7 @@ export default function Home() {
                     <input name="company" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm mb-1">Project Type</label>
                     <div className="relative">
@@ -313,18 +371,6 @@ export default function Home() {
                         <option>Redesign</option>
                         <option>Web App</option>
                         <option>Consulting</option>
-                      </select>
-                      <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm mb-1">Budget</label>
-                    <div className="relative">
-                      <select name="budget" className="w-full appearance-none rounded-md bg-white/5 border border-white/10 p-2 pr-8 outline-none text-white focus:ring-2 focus:ring-white/20 focus:border-white/20">
-                        <option>$1k–$2k</option>
-                        <option>$2k–$5k</option>
-                        <option>$5k–$10k</option>
-                        <option>$10k+</option>
                       </select>
                       <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
                     </div>
@@ -387,6 +433,25 @@ export default function Home() {
             </details>
           ))}
         </motion.div>
+      </section>
+
+      {/* Blog teaser */}
+      <section id="blog" className="w-full max-w-6xl mx-auto px-4 py-20">
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl font-bold mb-6 text-center"
+        >
+          Latest Articles
+        </motion.h2>
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
+          <p className="text-white/80">Short posts on web dev, entrepreneurship, and case studies.</p>
+          <div className="mt-4">
+            <a href="/blog" className="inline-block rounded-md border border-white/20 px-4 py-2 hover:bg-white/10">Visit the blog</a>
+          </div>
+        </div>
       </section>
     </main>
   )

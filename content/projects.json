@@ -1,19 +1,55 @@
 [
   {
-    "slug": "project-one",
-    "title": "Project One",
-    "tags": ["SaaS", "Next.js"],
+    "slug": "client-portfolio",
+    "title": "Client Portfolio",
+    "tags": ["Next.js", "Tailwind", "SEO"],
     "image": "/github-profile.png",
-    "blurb": "A performant marketing site with clean, modular UI.",
-    "link": "#"
+    "blurb": "Fast, SEO-optimized portfolio with clean sections and dark theme.",
+    "problem": "Client needed a modern personal site to win more interviews and clients.",
+    "solution": "Built a Next.js app with optimized images, strong CTAs, and accessible UI.",
+    "role": "Design, Frontend, Deployment",
+    "tech": ["Next.js", "Tailwind", "Framer Motion", "Vercel Analytics"],
+    "outcomes": ["~95 Lighthouse performance", "+25% time-on-page"],
+    "links": {"demo": "#", "github": "#"}
   },
   {
-    "slug": "local-biz",
-    "title": "Local Business",
-    "tags": ["Local Biz", "SEO"],
+    "slug": "local-business-site",
+    "title": "Local Business Site",
+    "tags": ["Local Biz", "Forms", "Analytics"],
     "image": "/github-profile.png",
-    "blurb": "Local business site with booking and analytics.",
-    "link": "#"
+    "blurb": "Responsive site with booking integration and analytics.",
+    "problem": "Owner needed more booked appointments from organic traffic.",
+    "solution": "Added clear service pages, FAQ, and Calendly; tuned SEO basics.",
+    "role": "UI, Integration, SEO",
+    "tech": ["Next.js", "Tailwind", "Calendly", "GA4"],
+    "outcomes": ["+18% form submissions", "FCP < 1.5s"],
+    "links": {"demo": "#", "github": "#"}
+  },
+  {
+    "slug": "ecommerce-concept",
+    "title": "E‑commerce Concept",
+    "tags": ["UI", "Components", "Performance"],
+    "image": "/github-profile.png",
+    "blurb": "Clean product pages and cart UI with fast interactions.",
+    "problem": "Explore a lean storefront with frictionless browsing.",
+    "solution": "Component-driven product cards, quick-view, and accessible cart.",
+    "role": "Frontend",
+    "tech": ["Next.js", "Tailwind", "Zustand"],
+    "outcomes": ["Snappy interactions", "Reusable UI kit"],
+    "links": {"demo": "#", "github": "#"}
+  },
+  {
+    "slug": "open-source-widget",
+    "title": "Open‑Source UI Widget",
+    "tags": ["Open Source", "TypeScript"],
+    "image": "/github-profile.png",
+    "blurb": "Scratch‑built accessible component published on GitHub.",
+    "problem": "Common UI pattern lacked an accessible, lightweight implementation.",
+    "solution": "Built an a11y‑first TS component with docs and tests.",
+    "role": "Author",
+    "tech": ["TypeScript", "React", "Testing Library"],
+    "outcomes": ["100+ stars", "Used across projects"],
+    "links": {"demo": "#", "github": "#"}
   }
 ]
 

@@ -45,6 +45,7 @@ export function SiteHeader() {
                 ? "text-white" 
                 : "text-white/50 hover:text-white hover:bg-white/10"
             }`}
+            aria-label="Home"
           >
             {(pathname === "/" && activeSection === "home") && (
               <motion.span layoutId="bottom-nav-active" className="absolute inset-0 rounded-full bg-white/20" />
@@ -58,6 +59,7 @@ export function SiteHeader() {
                 ? "text-white" 
                 : "text-white/50 hover:text-white hover:bg-white/10"
             }`}
+            aria-label="Pricing"
           >
             {(pathname === "/" && activeSection === "pricing") && (
               <motion.span layoutId="bottom-nav-active" className="absolute inset-0 rounded-full bg-white/20" />
@@ -71,6 +73,7 @@ export function SiteHeader() {
                 ? "text-white" 
                 : "text-white/50 hover:text-white hover:bg-white/10"
             }`}
+            aria-label="Projects"
           >
             {(pathname === "/" && activeSection === "projects") && (
               <motion.span layoutId="bottom-nav-active" className="absolute inset-0 rounded-full bg-white/20" />
@@ -84,6 +87,7 @@ export function SiteHeader() {
                 ? "text-white" 
                 : "text-white/50 hover:text-white hover:bg-white/10"
             }`}
+            aria-label="About"
           >
             {(pathname === "/" && activeSection === "about") && (
               <motion.span layoutId="bottom-nav-active" className="absolute inset-0 rounded-full bg-white/20" />
@@ -98,6 +102,7 @@ export function SiteHeader() {
                 ? "text-white" 
                 : "text-white/50 hover:text-white hover:bg-white/10"
             }`}
+            aria-label="Contact"
           >
             {(pathname === "/" && activeSection === "contact") && (
               <motion.span layoutId="bottom-nav-active" className="absolute inset-0 rounded-full bg-white/20" />
