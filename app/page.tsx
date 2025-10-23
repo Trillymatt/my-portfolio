@@ -97,9 +97,9 @@ export default function Home() {
   }, [isContactOpen])
 
   return (
-    <main className="flex min-h-screen flex-col text-white pb-28">
+    <main className="flex min-h-screen flex-col text-white pb-16">
       {/* Hero */}
-      <section id="home" className="w-full max-w-7xl mx-auto px-4 py-20">
+      <section id="home" className="w-full max-w-7xl mx-auto px-4 py-14">
         <div className="flex flex-col items-center justify-center space-y-10">
           <motion.h1
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -145,15 +145,15 @@ export default function Home() {
             >
               View My Work
             </Button>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="Download my résumé">Download Résumé</a>
-            <a href="https://github.com/mattknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View GitHub profile">GitHub</a>
-            <a href="https://www.linkedin.com/in/mattknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View LinkedIn profile">LinkedIn</a>
+            <a href="/MatthewNorman_FS.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="Download my résumé">Download Résumé</a>
+            <a href="https://github.com/Trillymatt" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View GitHub profile">GitHub</a>
+            <a href="https://www.linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View LinkedIn profile">LinkedIn</a>
           </div>
         </div>
       </section>
 
       {/* Skills & Technology */}
-      <section id="skills" className="w-full max-w-6xl mx-auto px-4 py-20">
+      <section id="skills" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -180,46 +180,62 @@ export default function Home() {
       </section>
 
       {/* Pricing moved up */}
-      <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-20">
+      <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-14">
         <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {(pricingContent as any).tiers.map((tier: any, idx: number) => (
-            <motion.div key={tier.name}
-              initial={{ opacity: 0, y: -24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.05 }}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6"
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <h3 className="text-xl font-semibold">{tier.name}</h3>
-                {tier.badge && <span className="text-xs px-2 py-0.5 rounded-full bg:white/10 border border-white/10">{tier.badge}</span>}
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: -24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="rounded-2xl border border-white/10 bg-white/5 p-6"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
+              <div className="sm:col-span-1">
+                <p className="text-lg font-semibold">Website</p>
               </div>
-              <p className="text-white/80 mt-1">{tier.pitch}</p>
-              <p className="mt-3 text-3xl font-bold">${tier.price.toLocaleString()}</p>
-              <p className="text-xs text-white/60 mt-1">Approx. timeline: {tier.name === 'Basic' ? '2–3 weeks' : tier.name === 'Premium' ? '3–6 weeks' : '6–8 weeks'}</p>
-              <ul className="mt-4 list-disc pl-5 space-y-1 text-white/80 text-sm">
-                {tier.features.map((f: string) => <li key={f}>{f}</li>)}
-              </ul>
-              <div className="mt-5">
-                <Button className="w-full" onClick={() => setIsContactOpen(true)}>Get a quote</Button>
+              <div className="sm:col-span-2 text-white/90 text-sm leading-6">
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Custom design (3–5 pages)</li>
+                  <li>Mobile‑first, accessible, SEO‑ready</li>
+                  <li>Fast hosting + analytics setup</li>
+                </ul>
               </div>
-            </motion.div>
-          ))}
-        </div>
-        <div className="max-w-3xl mx-auto mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
-          <p className="font-semibold">Additional services (separate fees)</p>
-          <ul className="list-disc pl-5 text-white/80 text-sm mt-2 space-y-1">
-            <li>Copywriting</li>
-            <li>Branding & visual identity</li>
-            <li>Photography & custom assets</li>
-            <li>Advanced SEO audits</li>
-          </ul>
+              <div className="sm:col-span-1 flex sm:flex-col justify-between sm:justify-start sm:items-end gap-3">
+                <div>
+                  <p className="text-sm uppercase text-white/60">One‑time</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xl text-white/50 line-through">$599</span>
+                    <span className="text-2xl font-bold">$399</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm uppercase text-white/60">Add‑on (optional)</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xl text-white/50 line-through">$99</span>
+                    <span className="text-2xl font-bold">$79<span className="text-base font-medium">/month</span></span>
+                  </div>
+                  <p className="text-xs text-white/60 mt-1">Ongoing updates & small changes</p>
+                  <p className="text-xs text-white/60">Examples: new sections, blog posts, copy tweaks</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6">
+              <Button
+                className="w-full sm:w-auto"
+                onClick={() => {
+                  setIsContactOpen(true)
+                }}
+              >
+                Get Started
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Projects */}
-      <section id="projects" className="w-full max-w-6xl mx-auto px-4 py-20">
+      <section id="projects" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -262,7 +278,7 @@ export default function Home() {
       </section>
 
       {/* About moved below pricing */}
-      <section id="about" className="w-full max-w-6xl mx-auto px-4 py-20">
+      <section id="about" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -290,7 +306,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="w-full max-w-6xl mx-auto px-4 py-20">
+      <section id="testimonials" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -311,7 +327,7 @@ export default function Home() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="w-full max-w-xl mx-auto px-4 py-20">
+      <section id="contact" className="w-full max-w-xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -404,7 +420,7 @@ export default function Home() {
       </section>
 
       {/* FAQs at bottom */}
-      <section id="faqs" className="w-full max-w-3xl mx-auto px-4 py-20">
+      <section id="faqs" className="w-full max-w-3xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -436,7 +452,7 @@ export default function Home() {
       </section>
 
       {/* Blog teaser */}
-      <section id="blog" className="w-full max-w-6xl mx-auto px-4 py-20">
+      <section id="blog" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
