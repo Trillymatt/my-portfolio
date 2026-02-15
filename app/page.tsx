@@ -14,11 +14,12 @@ import pricingContent from "@/content/pricing.json"
 import testimonials from "@/content/testimonials.json"
 
 const professionalFaqs = [
-  { q: "What kind of roles are you looking for?", a: "I'm open to full-time software engineering positions, especially in frontend/full-stack roles using React, Next.js, and TypeScript. I'm also interested in roles that involve system design and team collaboration." },
+  { q: "What kind of roles are you looking for?", a: "I'm targeting full-time software engineering roles, particularly in frontend or full-stack positions. I have hands-on experience with React, Next.js, TypeScript, Swift/SwiftUI, and Python from my internship at Apple and freelance work." },
   { q: "Are you open to remote work?", a: "Yes, I'm open to remote, hybrid, or on-site positions depending on the opportunity and location." },
-  { q: "What's your availability?", a: "I'm graduating in May 2026 and am available for full-time positions starting immediately after graduation. I'm also open to internship or part-time opportunities before then." },
-  { q: "Do you have experience working on a team?", a: "Yes. I've collaborated on projects in academic settings and with clients in my freelance work, using Git workflows, code reviews, and agile practices." },
-  { q: "What sets you apart from other candidates?", a: "I combine real-world client experience building production applications with a strong CS foundation. I'm also a parent, which has made me exceptionally disciplined, organized, and results-driven." },
+  { q: "What's your availability?", a: "I'm graduating in May 2026 and am available for full-time positions starting immediately after graduation." },
+  { q: "Do you have experience working on a team?", a: "Yes. At Apple, I collaborated closely with the Watch software and SwiftData teams, aligning project goals with managers and contributing to codebases used across the Cocoa organization. I also co-founded ColorStack UNT and led cross-functional events." },
+  { q: "What sets you apart from other candidates?", a: "I've interned at Apple twice across different engineering teams, hold an IBM Full Stack Developer certificate and PSM I certification, and co-founded a tech org at UNT. I combine big-tech experience with entrepreneurial drive and a 3.5 GPA in Computer Science." },
+  { q: "Do you have any certifications?", a: "Yes - I hold the IBM Full Stack Software Developer Professional Certificate (covering cloud computing, front-end development, CI/CD, and AWS) and the Professional Scrum Master (PSM I) certification." },
 ]
 
 export default function Home() {
@@ -148,10 +149,10 @@ export default function Home() {
                 </>
               ) : (
                 <>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Apple Intern</span>
                   <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Full-Stack Developer</span>
-                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>React / Next.js</span>
-                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>CS Student @ UNT</span>
-                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Open to Opportunities</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>B.S. Computer Science @ UNT</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>IBM Certified</span>
                 </>
               )}
             </motion.div>
@@ -217,15 +218,27 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
             <p className="font-semibold accent-text">Languages</p>
-            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>JavaScript/TypeScript, Python, SQL</p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+              {isBusiness
+                ? "JavaScript/TypeScript, Python, SQL"
+                : "JavaScript, Python, Java, C++, SQL, Swift/SwiftUI, HTML"}
+            </p>
           </div>
           <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
-            <p className="font-semibold accent-text">Frameworks</p>
-            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>React, Next.js, Node</p>
+            <p className="font-semibold accent-text">Frameworks & Tools</p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+              {isBusiness
+                ? "React, Next.js, Node.js"
+                : "React, Next.js, Node.js, Django, RESTful APIs"}
+            </p>
           </div>
           <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
-            <p className="font-semibold accent-text">Tools & Testing</p>
-            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>Git, CI/CD, Jest/RTL, Analytics</p>
+            <p className="font-semibold accent-text">{isBusiness ? "Tools & Testing" : "Practices & Certifications"}</p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+              {isBusiness
+                ? "Git, CI/CD, Jest/RTL, Analytics"
+                : "Git, CI/CD, Unit Testing, AWS, Agile/Scrum (PSM I)"}
+            </p>
           </div>
         </div>
       </section>
@@ -252,15 +265,14 @@ export default function Home() {
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
-                <h3 className="text-lg font-semibold">Freelance Software Engineer</h3>
-                <span className="text-sm accent-text">2023 - Present</span>
+                <h3 className="text-lg font-semibold">Watch Software Engineer Intern</h3>
+                <span className="text-sm accent-text">May 2025 - Aug 2025</span>
               </div>
-              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>Self-employed | Remote</p>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>Apple, Inc. | Cupertino, CA</p>
               <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                <li>Designed and built custom websites and web applications for small businesses</li>
-                <li>Delivered full-stack solutions using React, Next.js, TypeScript, and Node.js</li>
-                <li>Managed client relationships, timelines, and project scoping end-to-end</li>
-                <li>Implemented responsive, accessible, and SEO-optimized interfaces</li>
+                <li>Developed a script to integrate GitHub with Apple's internal bug reporting tool</li>
+                <li>Automated PR comment generation by matching bugs to new changes, streamlining developer workflows</li>
+                <li>Created an AI-powered code analysis system that flagged potential issues during reviews, increasing bug detection rate by 35%</li>
               </ul>
             </motion.div>
 
@@ -273,14 +285,34 @@ export default function Home() {
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
-                <h3 className="text-lg font-semibold">Computer Science Student</h3>
-                <span className="text-sm accent-text">2022 - May 2026</span>
+                <h3 className="text-lg font-semibold">SwiftData Engineer - Career Experience</h3>
+                <span className="text-sm accent-text">Jun 2024 - Nov 2024</span>
               </div>
-              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>University of North Texas | Denton, TX</p>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>Apple, Inc. | Cupertino, CA</p>
               <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                <li>Pursuing B.S. in Computer Science, graduating May 2026</li>
-                <li>Coursework in data structures, algorithms, databases, and software engineering</li>
-                <li>Applied classroom concepts to real-world client projects concurrently</li>
+                <li>Conducted comprehensive performance testing on the SwiftData framework, resolving and debugging 6 bugs</li>
+                <li>Proactively aligned project goals with team needs through regular collaboration with managers, delivering projects ahead of deadline within the Cocoa org</li>
+                <li>Optimized front-end performance with 6 comprehensive unit tests for the SampleTrips application, improving SwiftData framework adoption among developers</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                <h3 className="text-lg font-semibold">Freelance Software Engineer</h3>
+                <span className="text-sm accent-text">2023 - Present</span>
+              </div>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>Self-employed | Remote</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                <li>Designed and built custom websites and web applications for small businesses using React, Next.js, and TypeScript</li>
+                <li>Managed client relationships, timelines, and project scoping end-to-end</li>
+                <li>Implemented responsive, accessible, and SEO-optimized interfaces</li>
               </ul>
             </motion.div>
           </div>
@@ -312,11 +344,92 @@ export default function Home() {
                 <h3 className="text-lg font-semibold">B.S. Computer Science</h3>
                 <span className="text-sm accent-text">Expected May 2026</span>
               </div>
-              <p className="text-sm" style={{ color: "var(--text-secondary)" }}>University of North Texas</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {["Data Structures", "Algorithms", "Databases", "Software Engineering", "Operating Systems", "Computer Networks"].map((c) => (
+              <p className="text-sm" style={{ color: "var(--text-secondary)" }}>University of North Texas | Denton, TX</p>
+              <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>GPA: <span className="accent-text font-semibold">3.5</span></p>
+              <p className="text-xs mt-3 font-medium uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>Relevant Coursework</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {["Algorithms", "Data Structures", "Intro to AI", "Agile Development"].map((c) => (
                   <span key={c} className="px-2 py-0.5 text-xs rounded-full border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>{c}</span>
                 ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* === PROFESSIONAL MODE: Leadership & Certifications === */}
+      {!isBusiness && (
+        <section id="leadership" className="w-full max-w-6xl mx-auto px-4 py-14">
+          <motion.h2
+            initial={{ opacity: 0, y: -16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-3xl font-bold mb-6 text-center"
+          >
+            Leadership & Certifications
+          </motion.h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                <h3 className="text-lg font-semibold">Career Preparation Fellow</h3>
+                <span className="text-sm accent-text">Jan 2024 - Present</span>
+              </div>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>Management Leadership for Tomorrow (MLT) | Washington, DC</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                <li>Accepted into a selective 18-month professional development program for high-achieving diverse talent</li>
+                <li>Leveraged networking opportunities at conferences hosted by Deloitte, LinkedIn, and Target, securing 12 informational interviews and expanding professional network by 54%</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                <h3 className="text-lg font-semibold">Sponsorship Chair / Co-founder</h3>
+                <span className="text-sm accent-text">Jul 2024 - Present</span>
+              </div>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>ColorStack UNT | Denton, TX</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                <li>Spearheaded 4 professional development events, leading to a 92% satisfaction rating from students</li>
+                <li>Collaborated with E-board members to grow the organization to 43 members and mentored 5 students new to UNT</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <h3 className="text-lg font-semibold mb-4">Certifications</h3>
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <div>
+                    <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>IBM Full Stack Software Developer Professional Certificate</p>
+                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>Cloud Computing, Front-End Development, Unit Testing, CI/CD, AWS</p>
+                  </div>
+                  <span className="text-sm accent-text shrink-0">Jan 2026</span>
+                </div>
+                <div className="border-t" style={{ borderColor: "var(--surface-border)" }} />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <p className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>Professional Scrum Master (PSM I)</p>
+                  <span className="text-sm accent-text shrink-0">Scrum.org</span>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -448,7 +561,7 @@ export default function Home() {
             words={
               isBusiness
                 ? "I am a Computer Science student at the University of North Texas, graduating in May 2026. I'm passionate about entrepreneurship and building practical, high-quality software. Outside of class and client work, I'm a proud parent to a 10-month-old, which keeps me focused, organized, and driven to deliver meaningful results."
-                : "I am a Computer Science student at the University of North Texas, graduating in May 2026. I bring real-world experience building production web applications for clients alongside a strong academic foundation. I'm passionate about clean code, thoughtful architecture, and delivering software that makes a difference. I'm currently seeking full-time opportunities in software engineering."
+                : "I'm a Computer Science student at the University of North Texas (3.5 GPA) with two Apple engineering experiences under my belt. From building AI-powered code analysis tools on the Watch team to performance testing SwiftData, I've shipped real impact at scale. I also co-founded ColorStack UNT and build production web apps for clients. I'm graduating May 2026 and seeking full-time software engineering roles."
             }
           />
         </motion.div>
@@ -461,9 +574,9 @@ export default function Home() {
             </>
           ) : (
             <>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">My Strengths</p><p style={{ color: "var(--text-secondary)" }}>Full-stack development, React/Next.js, TypeScript, responsive design, and production-ready code.</p></div>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Collaborative, detail-oriented, and deadline-driven. I write clean, well-tested code.</p></div>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What I Bring</p><p style={{ color: "var(--text-secondary)" }}>Real client experience, a CS degree, and the discipline to ship quality software consistently.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">Industry Experience</p><p style={{ color: "var(--text-secondary)" }}>Two Apple engineering roles spanning Watch software and SwiftData, plus production freelance work with React, Next.js, and TypeScript.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Agile/Scrum certified (PSM I), collaborative, and deadline-driven. I write clean, well-tested code and communicate proactively.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">Leadership</p><p style={{ color: "var(--text-secondary)" }}>Co-founded ColorStack UNT, MLT Career Prep Fellow, and mentored students. I lead with empathy and accountability.</p></div>
             </>
           )}
         </div>

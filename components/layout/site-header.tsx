@@ -14,7 +14,7 @@ export function SiteHeader() {
   const [activeSection, setActiveSection] = useState<string>("home")
 
   const businessSections = ["home", "pricing", "projects", "about", "contact"]
-  const professionalSections = ["home", "experience", "education", "projects", "about", "contact"]
+  const professionalSections = ["home", "experience", "education", "leadership", "projects", "about", "contact"]
   const sectionIds = isBusiness ? businessSections : professionalSections
 
   useEffect(() => {
