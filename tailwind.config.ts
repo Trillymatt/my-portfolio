@@ -5,6 +5,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./context/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: ["class"],
   theme: {
@@ -15,7 +16,20 @@ const config: Config = {
         "2xl": "1400px",
       },
     },
-    extend: {},
+    extend: {
+      colors: {
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+        },
+        surface: {
+          DEFAULT: "var(--surface)",
+          border: "var(--surface-border)",
+          hover: "var(--surface-hover)",
+        },
+      },
+    },
   },
   plugins: [require("@tailwindcss/typography")],
-} 
+}
+
+export default config
