@@ -66,3 +66,47 @@ select option {
   background-color: var(--bg-solid);
   color: #ffffff;
 }
+
+/* === VIEW TRANSITIONS: Expanding circle on mode switch === */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  animation: circle-expand 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes circle-expand {
+  from {
+    clip-path: circle(0% at var(--toggle-x, 50%) var(--toggle-y, 50%));
+  }
+  to {
+    clip-path: circle(150% at var(--toggle-x, 50%) var(--toggle-y, 50%));
+  }
+}
+
+/* Disable animation for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* === KONAMI CODE EASTER EGG FLASH === */
+@keyframes mode-flash {
+  0% { opacity: 0; }
+  50% { opacity: 0.15; }
+  100% { opacity: 0; }
+}
+
+.mode-flash-overlay {
+  animation: mode-flash 0.6s ease-out forwards;
+}
