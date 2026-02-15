@@ -2,17 +2,28 @@
 
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { sendContact } from "@/app/actions/sendContact"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
+import { useMode } from "@/context/mode-context"
 import faqs from "@/content/faqs.json"
 import projectContent from "@/content/projects.json"
 import pricingContent from "@/content/pricing.json"
 import testimonials from "@/content/testimonials.json"
 
+const professionalFaqs = [
+  { q: "What kind of roles are you looking for?", a: "I'm open to full-time software engineering positions, especially in frontend/full-stack roles using React, Next.js, and TypeScript. I'm also interested in roles that involve system design and team collaboration." },
+  { q: "Are you open to remote work?", a: "Yes, I'm open to remote, hybrid, or on-site positions depending on the opportunity and location." },
+  { q: "What's your availability?", a: "I'm graduating in May 2026 and am available for full-time positions starting immediately after graduation. I'm also open to internship or part-time opportunities before then." },
+  { q: "Do you have experience working on a team?", a: "Yes. I've collaborated on projects in academic settings and with clients in my freelance work, using Git workflows, code reviews, and agile practices." },
+  { q: "What sets you apart from other candidates?", a: "I combine real-world client experience building production applications with a strong CS foundation. I'm also a parent, which has made me exceptionally disciplined, organized, and results-driven." },
+]
+
 export default function Home() {
+  const { mode } = useMode()
+  const isBusiness = mode === "business"
 
   const projects = (projectContent as any[]).slice(0, 6).map((p) => ({
     title: p.title,
@@ -22,16 +33,9 @@ export default function Home() {
     tags: p.tags,
   }))
 
-  const tiers = [
-    { name: "Starter", price: "$1,200", description: "For personal brands and small businesses", features: ["1-3 pages", "Responsive design", "Basic SEO", "Contact form", "2 revision rounds"], cta: "Get Started" },
-    { name: "Business", price: "$2,800", description: "For growing teams and services", features: ["Up to 8 pages", "Blog/CMS", "Advanced SEO", "Analytics", "Custom components", "3 revisions"], cta: "Book a Call", featured: true },
-    { name: "Custom", price: "Let's talk", description: "Complex apps and integrations", features: ["Unlimited pages", "Design system", "Integrations", "Auth, payments", "Support"], cta: "Request Quote" },
-  ]
-
   const [status, setStatus] = useState<string | null>(null)
   const [isContactOpen, setIsContactOpen] = useState(false)
 
-  // Prevent auto-scroll to anchored sections on load (clears #hash)
   useEffect(() => {
     if (typeof window === "undefined") return
     if (window.location.hash) {
@@ -48,9 +52,8 @@ export default function Home() {
     if (result?.ok) {
       setStatus("Thanks! I'll get back to you within 1 business day.")
       try { form.reset() } catch {}
-      // Also open user's mail client with a prefilled email
       if (typeof window !== "undefined") {
-        const to = "mattknorman@gmail.com" // change to your preferred email
+        const to = "mattknorman@gmail.com"
         const name = String(formData.get("name") || "").trim()
         const email = String(formData.get("email") || "").trim()
         const phone = String(formData.get("phone") || "").trim()
@@ -58,15 +61,15 @@ export default function Home() {
         const type = String(formData.get("type") || "").trim()
         const timeline = String(formData.get("timeline") || "").trim()
         const message = String(formData.get("message") || "").trim()
-
-        const subject = `New project inquiry from ${name || "Website"}`
+        const subject = isBusiness
+          ? `New project inquiry from ${name || "Website"}`
+          : `Professional inquiry from ${name || "Website"}`
         const bodyLines = [
           name && `Name: ${name}`,
           email && `Email: ${email}`,
           phone && `Phone: ${phone}`,
           company && `Company: ${company}`,
-          type && `Project Type: ${type}`,
-          
+          type && `${isBusiness ? "Project Type" : "Inquiry Type"}: ${type}`,
           timeline && `Timeline: ${timeline}`,
           "",
           "Message:",
@@ -87,7 +90,6 @@ export default function Home() {
       if (e.key === "Escape") setIsContactOpen(false)
     }
     window.addEventListener("keydown", onKey)
-    // lock body scroll while modal is open
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
     return () => {
@@ -95,6 +97,8 @@ export default function Home() {
       document.body.style.overflow = previousOverflow
     }
   }, [isContactOpen])
+
+  const activeFaqs = isBusiness ? faqs : professionalFaqs
 
   return (
     <main className="flex min-h-screen flex-col text-white pb-16">
@@ -109,45 +113,92 @@ export default function Home() {
           >
             Matthew Norman
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="text-center text-white/70 text-lg sm:text-xl"
-          >
-            Software Engineer / Entrepreneur
-          </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12 }}
-            className="flex flex-wrap items-center justify-center gap-2"
-          >
-            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🎯 Mission-driven</span>
-            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">👨‍👧 Proud Dad</span>
-            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🎓 Student</span>
-            <span className="px-3 py-1 rounded-full text-sm bg-white/10 text-white/80 border border-white/10">🛠️ Builder at heart</span>
-          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={mode}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="text-center text-lg sm:text-xl"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {isBusiness
+                ? "Software Engineer / Entrepreneur"
+                : "Software Engineer"}
+            </motion.p>
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={mode + "-badges"}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-wrap items-center justify-center gap-2"
+            >
+              {isBusiness ? (
+                <>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Mission-driven</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Proud Dad</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Student</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Builder at heart</span>
+                </>
+              ) : (
+                <>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Full-Stack Developer</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>React / Next.js</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>CS Student @ UNT</span>
+                  <span className="px-3 py-1 rounded-full text-sm border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>Open to Opportunities</span>
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
+
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <Button
-              className="px-5"
-              onClick={() => setIsContactOpen(true)}
-              aria-label="Schedule a free consultation"
-            >
-              Schedule a Free Consultation
-            </Button>
-            <Button
-              variant="outline"
-              className="px-5 border-white/30 text-white hover:bg-white/10"
-              onClick={() => { const el = document.getElementById("projects"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }) }}
-              aria-label="View my work"
-            >
-              View My Work
-            </Button>
-            <a href="/MatthewNorman_FS.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="Download my résumé">Download Résumé</a>
-            <a href="https://github.com/Trillymatt" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View GitHub profile">GitHub</a>
-            <a href="https://www.linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border border-white/20 text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="View LinkedIn profile">LinkedIn</a>
+            {isBusiness ? (
+              <>
+                <Button
+                  className="px-5 accent-bg text-white hover:opacity-90"
+                  onClick={() => setIsContactOpen(true)}
+                >
+                  Schedule a Free Consultation
+                </Button>
+                <Button
+                  variant="outline"
+                  className="px-5 border-white/30 text-white hover:bg-white/10"
+                  onClick={() => { const el = document.getElementById("projects"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }) }}
+                >
+                  View My Work
+                </Button>
+              </>
+            ) : (
+              <>
+                <a href="/MatthewNorman_FS.pdf" target="_blank" rel="noopener noreferrer">
+                  <Button className="px-5 accent-bg text-white hover:opacity-90">
+                    Download Resume
+                  </Button>
+                </a>
+                <Button
+                  variant="outline"
+                  className="px-5 border-white/30 text-white hover:bg-white/10"
+                  onClick={() => { const el = document.getElementById("experience"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }) }}
+                >
+                  View Experience
+                </Button>
+                <Button
+                  variant="outline"
+                  className="px-5 border-white/30 text-white hover:bg-white/10"
+                  onClick={() => setIsContactOpen(true)}
+                >
+                  Contact Me
+                </Button>
+              </>
+            )}
+            <a href="https://github.com/Trillymatt" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" style={{ borderColor: "var(--surface-border)" }}>GitHub</a>
+            <a href="https://www.linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" style={{ borderColor: "var(--surface-border)" }}>LinkedIn</a>
           </div>
         </div>
       </section>
@@ -164,87 +215,184 @@ export default function Home() {
           Skills & Technology
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="font-semibold">Languages</p>
-            <p className="text-white/70 mt-1 text-sm">JavaScript/TypeScript, Python, SQL</p>
+          <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+            <p className="font-semibold accent-text">Languages</p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>JavaScript/TypeScript, Python, SQL</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="font-semibold">Frameworks</p>
-            <p className="text-white/70 mt-1 text-sm">React, Next.js, Node</p>
+          <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+            <p className="font-semibold accent-text">Frameworks</p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>React, Next.js, Node</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="font-semibold">Tools & Testing</p>
-            <p className="text-white/70 mt-1 text-sm">Git, CI/CD, Jest/RTL, Analytics</p>
+          <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+            <p className="font-semibold accent-text">Tools & Testing</p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>Git, CI/CD, Jest/RTL, Analytics</p>
           </div>
         </div>
       </section>
 
-      {/* Pricing moved up */}
-      <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-14">
-        <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: -24 }}
+      {/* === PROFESSIONAL MODE: Experience Section === */}
+      {!isBusiness && (
+        <section id="experience" className="w-full max-w-6xl mx-auto px-4 py-14">
+          <motion.h2
+            initial={{ opacity: 0, y: -16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="rounded-2xl border border-white/10 bg-white/5 p-6"
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-3xl font-bold mb-6 text-center"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
-              <div className="sm:col-span-1">
-                <p className="text-lg font-semibold">Website</p>
+            Experience
+          </motion.h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                <h3 className="text-lg font-semibold">Freelance Software Engineer</h3>
+                <span className="text-sm accent-text">2023 - Present</span>
               </div>
-              <div className="sm:col-span-2 text-white/90 text-sm leading-6">
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Custom design (3–5 pages)</li>
-                  <li>Mobile‑first, accessible, SEO‑ready</li>
-                  <li>Fast hosting + analytics setup</li>
-                </ul>
-              </div>
-              <div className="sm:col-span-1 flex sm:flex-col justify-between sm:justify-start sm:items-end gap-3">
-                <div>
-                  <p className="text-sm uppercase text-white/60">One‑time</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xl text-white/50 line-through">$599</span>
-                    <span className="text-2xl font-bold">$399</span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm uppercase text-white/60">Add‑on (optional)</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xl text-white/50 line-through">$99</span>
-                    <span className="text-2xl font-bold">$79<span className="text-base font-medium">/month</span></span>
-                  </div>
-                  <p className="text-xs text-white/60 mt-1">Ongoing updates & small changes</p>
-                  <p className="text-xs text-white/60">Examples: new sections, blog posts, copy tweaks</p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6">
-              <Button
-                className="w-full sm:w-auto"
-                onClick={() => {
-                  setIsContactOpen(true)
-                }}
-              >
-                Get Started
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>Self-employed | Remote</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                <li>Designed and built custom websites and web applications for small businesses</li>
+                <li>Delivered full-stack solutions using React, Next.js, TypeScript, and Node.js</li>
+                <li>Managed client relationships, timelines, and project scoping end-to-end</li>
+                <li>Implemented responsive, accessible, and SEO-optimized interfaces</li>
+              </ul>
+            </motion.div>
 
-      {/* Projects */}
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                <h3 className="text-lg font-semibold">Computer Science Student</h3>
+                <span className="text-sm accent-text">2022 - May 2026</span>
+              </div>
+              <p className="text-sm mb-3" style={{ color: "var(--text-secondary)" }}>University of North Texas | Denton, TX</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                <li>Pursuing B.S. in Computer Science, graduating May 2026</li>
+                <li>Coursework in data structures, algorithms, databases, and software engineering</li>
+                <li>Applied classroom concepts to real-world client projects concurrently</li>
+              </ul>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* === PROFESSIONAL MODE: Education Section === */}
+      {!isBusiness && (
+        <section id="education" className="w-full max-w-6xl mx-auto px-4 py-14">
+          <motion.h2
+            initial={{ opacity: 0, y: -16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-3xl font-bold mb-6 text-center"
+          >
+            Education
+          </motion.h2>
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-2xl border p-6"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2">
+                <h3 className="text-lg font-semibold">B.S. Computer Science</h3>
+                <span className="text-sm accent-text">Expected May 2026</span>
+              </div>
+              <p className="text-sm" style={{ color: "var(--text-secondary)" }}>University of North Texas</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {["Data Structures", "Algorithms", "Databases", "Software Engineering", "Operating Systems", "Computer Networks"].map((c) => (
+                  <span key={c} className="px-2 py-0.5 text-xs rounded-full border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>{c}</span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* === BUSINESS MODE: Pricing === */}
+      {isBusiness && (
+        <section id="pricing" className="w-full max-w-6xl mx-auto px-4 py-14">
+          <h2 className="text-3xl font-bold mb-6 text-center">Pricing</h2>
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-2xl border p-6 accent-glow"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
+                <div className="sm:col-span-1">
+                  <p className="text-lg font-semibold accent-text">Website</p>
+                </div>
+                <div className="sm:col-span-2 text-sm leading-6" style={{ color: "var(--text-secondary)" }}>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>Custom design (3-5 pages)</li>
+                    <li>Mobile-first, accessible, SEO-ready</li>
+                    <li>Fast hosting + analytics setup</li>
+                  </ul>
+                </div>
+                <div className="sm:col-span-1 flex sm:flex-col justify-between sm:justify-start sm:items-end gap-3">
+                  <div>
+                    <p className="text-sm uppercase" style={{ color: "var(--text-muted)" }}>One-time</p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xl text-white/50 line-through">$599</span>
+                      <span className="text-2xl font-bold accent-text">$399</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm uppercase" style={{ color: "var(--text-muted)" }}>Add-on (optional)</p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xl text-white/50 line-through">$99</span>
+                      <span className="text-2xl font-bold accent-text">$79<span className="text-base font-medium">/month</span></span>
+                    </div>
+                    <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>Ongoing updates & small changes</p>
+                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>Examples: new sections, blog posts, copy tweaks</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6">
+                <Button
+                  className="w-full sm:w-auto accent-bg text-white hover:opacity-90"
+                  onClick={() => setIsContactOpen(true)}
+                >
+                  Get Started
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Projects (both modes) */}
       <section id="projects" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-3xl font-bold mb-6 text-center"
+          className="text-3xl font-bold mb-2 text-center"
         >
-          Projects
+          {isBusiness ? "Projects" : "Portfolio"}
         </motion.h2>
+        <p className="text-center mb-6 text-sm" style={{ color: "var(--text-muted)" }}>
+          {isBusiness ? "Recent client and personal work" : "Selected work demonstrating my technical abilities"}
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {projects.map((p, i) => (
             <motion.a
@@ -254,7 +402,8 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.05 }}
-              className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition"
+              className="rounded-2xl border overflow-hidden transition hover:scale-[1.02]"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
             >
               {p.image && (
                 <div className="relative w-full h-40">
@@ -263,11 +412,11 @@ export default function Home() {
               )}
               <div className="p-5">
                 <p className="text-lg font-semibold">{p.title}</p>
-                <p className="text-white/70 text-sm mt-1">{p.description}</p>
+                <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>{p.description}</p>
                 {p.tags && (
                   <div className="flex flex-wrap gap-2 mt-3">
                     {p.tags.map((t: string) => (
-                      <span key={t} className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-white/80 border border-white/10">{t}</span>
+                      <span key={t} className="px-2 py-0.5 text-xs rounded-full border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)", color: "var(--text-secondary)" }}>{t}</span>
                     ))}
                   </div>
                 )}
@@ -277,7 +426,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About moved below pricing */}
+      {/* About */}
       <section id="about" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
@@ -295,17 +444,32 @@ export default function Home() {
           className="max-w-3xl mx-auto mb-8 text-center"
         >
           <TextGenerateEffect
-            words="I am a Computer Science student at the University of North Texas, graduating in May 2026. I’m passionate about entrepreneurship and building practical, high-quality software. Outside of class and client work, I’m a proud parent to a 10‑month‑old, which keeps me focused, organized, and driven to deliver meaningful results."
+            key={mode}
+            words={
+              isBusiness
+                ? "I am a Computer Science student at the University of North Texas, graduating in May 2026. I'm passionate about entrepreneurship and building practical, high-quality software. Outside of class and client work, I'm a proud parent to a 10-month-old, which keeps me focused, organized, and driven to deliver meaningful results."
+                : "I am a Computer Science student at the University of North Texas, graduating in May 2026. I bring real-world experience building production web applications for clients alongside a strong academic foundation. I'm passionate about clean code, thoughtful architecture, and delivering software that makes a difference. I'm currently seeking full-time opportunities in software engineering."
+            }
           />
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What I Do</p><p className="text-white/70">Design, develop, and deploy high-quality web experiences with React/Next.js.</p></div>
-          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">How I Work</p><p className="text-white/70">Strategy-first, mobile-friendly, performance-focused. Clean code and clear comms.</p></div>
-          <div className="rounded-lg border border-white/10 p-5 bg-white/5"><p className="text-xl font-semibold mb-2">What You Get</p><p className="text-white/70">Fast, SEO-ready, and tailored to your brand and goals.</p></div>
+          {isBusiness ? (
+            <>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What I Do</p><p style={{ color: "var(--text-secondary)" }}>Design, develop, and deploy high-quality web experiences with React/Next.js.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Strategy-first, mobile-friendly, performance-focused. Clean code and clear comms.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What You Get</p><p style={{ color: "var(--text-secondary)" }}>Fast, SEO-ready, and tailored to your brand and goals.</p></div>
+            </>
+          ) : (
+            <>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">My Strengths</p><p style={{ color: "var(--text-secondary)" }}>Full-stack development, React/Next.js, TypeScript, responsive design, and production-ready code.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Collaborative, detail-oriented, and deadline-driven. I write clean, well-tested code.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What I Bring</p><p style={{ color: "var(--text-secondary)" }}>Real client experience, a CS degree, and the discipline to ship quality software consistently.</p></div>
+            </>
+          )}
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials (business) / References note (professional) */}
       <section id="testimonials" className="w-full max-w-6xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
@@ -314,13 +478,13 @@ export default function Home() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-3xl font-bold mb-6 text-center"
         >
-          Testimonials
+          {isBusiness ? "Testimonials" : "What People Say"}
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {(testimonials as any[]).map((t: any) => (
-            <div key={t.quote} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <p className="text-white/90">“{t.quote}”</p>
-              <p className="text-white/60 mt-3 text-sm">— {t.author}, {t.role}</p>
+            <div key={t.quote} className="rounded-2xl border p-6" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+              <p style={{ color: "var(--text-secondary)" }}>"{t.quote}"</p>
+              <p className="mt-3 text-sm" style={{ color: "var(--text-muted)" }}>- {t.author}, {t.role}</p>
             </div>
           ))}
         </div>
@@ -337,80 +501,115 @@ export default function Home() {
         >
           Contact
         </motion.h2>
-        <p className="text-white/70 text-center mb-6">Ready to discuss your project? Share a few details and I’ll follow up promptly.</p>
+        <p className="text-center mb-6" style={{ color: "var(--text-secondary)" }}>
+          {isBusiness
+            ? "Ready to discuss your project? Share a few details and I'll follow up promptly."
+            : "Interested in working together? I'd love to hear from you."}
+        </p>
         <div className="flex justify-center">
-          <Button onClick={() => setIsContactOpen(true)}>contact me</Button>
+          <Button className="accent-bg text-white hover:opacity-90" onClick={() => setIsContactOpen(true)}>
+            {isBusiness ? "Start a Project" : "Get in Touch"}
+          </Button>
         </div>
         {status && <p className="text-green-400 text-center text-sm mt-4">{status}</p>}
 
         {isContactOpen && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-[rgba(7,19,32,0.6)] backdrop-blur-sm" onClick={() => setIsContactOpen(false)} />
+            <div className="absolute inset-0 backdrop-blur-sm" style={{ backgroundColor: "var(--modal-overlay)" }} onClick={() => setIsContactOpen(false)} />
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="contact-title"
-              className="relative w-full max-w-lg rounded-2xl bg-[rgba(7,19,32,0.95)] border border-white/10 p-6 shadow-xl"
+              className="relative w-full max-w-lg rounded-2xl border p-6 shadow-xl"
+              style={{ backgroundColor: "var(--modal-bg)", borderColor: "var(--surface-border)" }}
             >
               <div className="flex items-center justify-between mb-2">
-                <h3 id="contact-title" className="text-xl font-semibold">Tell me about your project</h3>
-                <button aria-label="Close" className="text-white/60 hover:text-white" onClick={() => setIsContactOpen(false)}>×</button>
+                <h3 id="contact-title" className="text-xl font-semibold">
+                  {isBusiness ? "Tell me about your project" : "Let's connect"}
+                </h3>
+                <button aria-label="Close" className="text-white/60 hover:text-white" onClick={() => setIsContactOpen(false)}>x</button>
               </div>
-              <p className="text-white/60 text-sm mb-4">Provide details so I can prepare an accurate response.</p>
+              <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
+                {isBusiness
+                  ? "Provide details so I can prepare an accurate response."
+                  : "Share a bit about yourself and what you're looking for."}
+              </p>
               <form onSubmit={onSubmit} className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm mb-1">Name</label>
-                    <input required name="name" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
+                    <input required name="name" className="w-full rounded-md border p-2 outline-none text-white placeholder-white/40 focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }} />
                   </div>
                   <div>
                     <label className="block text-sm mb-1">Email</label>
-                    <input required type="email" name="email" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
+                    <input required type="email" name="email" className="w-full rounded-md border p-2 outline-none text-white placeholder-white/40 focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }} />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm mb-1">Phone (optional)</label>
-                    <input name="phone" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
+                    <input name="phone" className="w-full rounded-md border p-2 outline-none text-white placeholder-white/40 focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }} />
                   </div>
                   <div>
                     <label className="block text-sm mb-1">Company (optional)</label>
-                    <input name="company" className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
+                    <input name="company" className="w-full rounded-md border p-2 outline-none text-white placeholder-white/40 focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }} />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-sm mb-1">Project Type</label>
+                    <label className="block text-sm mb-1">{isBusiness ? "Project Type" : "Inquiry Type"}</label>
                     <div className="relative">
-                      <select name="type" className="w-full appearance-none rounded-md bg-white/5 border border-white/10 p-2 pr-8 outline-none text-white focus:ring-2 focus:ring-white/20 focus:border-white/20">
-                        <option>New Website</option>
-                        <option>Redesign</option>
-                        <option>Web App</option>
-                        <option>Consulting</option>
+                      <select name="type" className="w-full appearance-none rounded-md border p-2 pr-8 outline-none text-white focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+                        {isBusiness ? (
+                          <>
+                            <option>New Website</option>
+                            <option>Redesign</option>
+                            <option>Web App</option>
+                            <option>Consulting</option>
+                          </>
+                        ) : (
+                          <>
+                            <option>Job Opportunity</option>
+                            <option>Freelance Project</option>
+                            <option>Collaboration</option>
+                            <option>Other</option>
+                          </>
+                        )}
                       </select>
                       <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm mb-1">Timeline</label>
+                    <label className="block text-sm mb-1">{isBusiness ? "Timeline" : "Timeframe"}</label>
                     <div className="relative">
-                      <select name="timeline" className="w-full appearance-none rounded-md bg-white/5 border border-white/10 p-2 pr-8 outline-none text-white focus:ring-2 focus:ring-white/20 focus:border-white/20">
-                        <option>ASAP</option>
-                        <option>1–2 months</option>
-                        <option>3–6 months</option>
-                        <option>Flexible</option>
+                      <select name="timeline" className="w-full appearance-none rounded-md border p-2 pr-8 outline-none text-white focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+                        {isBusiness ? (
+                          <>
+                            <option>ASAP</option>
+                            <option>1-2 months</option>
+                            <option>3-6 months</option>
+                            <option>Flexible</option>
+                          </>
+                        ) : (
+                          <>
+                            <option>Immediate</option>
+                            <option>Next few weeks</option>
+                            <option>Next few months</option>
+                            <option>Just exploring</option>
+                          </>
+                        )}
                       </select>
                       <ChevronDownIcon className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60" />
                     </div>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm mb-1">Project Goals / Message</label>
-                  <textarea required name="message" rows={5} className="w-full rounded-md bg-white/5 border border-white/10 p-2 outline-none text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20" />
+                  <label className="block text-sm mb-1">{isBusiness ? "Project Goals / Message" : "Message"}</label>
+                  <textarea required name="message" rows={5} className="w-full rounded-md border p-2 outline-none text-white placeholder-white/40 focus:ring-2" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }} />
                 </div>
                 <div className="flex items-center justify-between gap-3 pt-2">
-                  <p className="text-white/50 text-xs">I’ll never share your information. You’ll receive a reply within one business day.</p>
-                  <Button type="submit">Send</Button>
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>I'll never share your information. You'll receive a reply within one business day.</p>
+                  <Button type="submit" className="accent-bg text-white hover:opacity-90">Send</Button>
                 </div>
                 {status && <p className="text-green-400 text-sm text-center">{status}</p>}
               </form>
@@ -419,7 +618,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* FAQs at bottom */}
+      {/* FAQs */}
       <section id="faqs" className="w-full max-w-3xl mx-auto px-4 py-14">
         <motion.h2
           initial={{ opacity: 0, y: -16 }}
@@ -435,15 +634,16 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/10"
+          className="rounded-2xl border divide-y"
+          style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
         >
-          {faqs.map((item, idx) => (
-            <details key={idx} className="group">
+          {activeFaqs.map((item, idx) => (
+            <details key={mode + idx} className="group" style={{ borderColor: "var(--surface-border)" }}>
               <summary className="cursor-pointer list-none p-5 flex items-start justify-between gap-4">
-                <span className="font-medium text-white/90">{item.q}</span>
-                <span className="text-white/50 group-open:rotate-180 transition-transform">⌄</span>
+                <span className="font-medium" style={{ color: "var(--text-secondary)" }}>{item.q}</span>
+                <span className="group-open:rotate-180 transition-transform" style={{ color: "var(--text-muted)" }}>&#8964;</span>
               </summary>
-              <div className="px-5 pb-5 pt-0 text-white/70">
+              <div className="px-5 pb-5 pt-0" style={{ color: "var(--text-secondary)" }}>
                 {item.a}
               </div>
             </details>
@@ -462,10 +662,14 @@ export default function Home() {
         >
           Latest Articles
         </motion.h2>
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
-          <p className="text-white/80">Short posts on web dev, entrepreneurship, and case studies.</p>
+        <div className="rounded-2xl border p-6 text-center" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
+          <p style={{ color: "var(--text-secondary)" }}>
+            {isBusiness
+              ? "Short posts on web dev, entrepreneurship, and case studies."
+              : "Thoughts on software engineering, career growth, and tech."}
+          </p>
           <div className="mt-4">
-            <a href="/blog" className="inline-block rounded-md border border-white/20 px-4 py-2 hover:bg-white/10">Visit the blog</a>
+            <a href="/blog" className="inline-block rounded-md border px-4 py-2 hover:bg-white/10" style={{ borderColor: "var(--surface-border)" }}>Visit the blog</a>
           </div>
         </div>
       </section>

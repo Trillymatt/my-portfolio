@@ -1,27 +1,68 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
 
 html { scroll-behavior: smooth; }
 
-/* Navy dark theme */
-:root {
-  --bg-start: #0b1b2b; /* deep navy */
-  --bg-end: #071320;   /* darker navy */
-  --texture-color: 255 255 255; /* white for overlay dots/lines */
+/* === DUAL MODE THEME SYSTEM === */
+
+/* Business mode: dark background, cyan accent */
+:root,
+[data-mode="business"] {
+  --bg-start: #0b1b2b;
+  --bg-end: #071320;
+  --bg-solid: #0b1b2b;
+  --texture-color: 255 255 255;
+  --accent: 6 182 212;       /* cyan-500 */
+  --accent-hex: #06b6d4;
+  --surface: rgba(255,255,255,0.05);
+  --surface-border: rgba(255,255,255,0.10);
+  --surface-hover: rgba(255,255,255,0.10);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.70);
+  --text-muted: rgba(255,255,255,0.50);
+  --nav-bg: rgba(7,19,32,0.6);
+  --modal-bg: rgba(7,19,32,0.95);
+  --modal-overlay: rgba(7,19,32,0.6);
+}
+
+/* Professional mode: accent-rich background, indigo accent */
+[data-mode="professional"] {
+  --bg-start: #0f0a1e;
+  --bg-end: #0a0618;
+  --bg-solid: #0f0a1e;
+  --texture-color: 139 92 246;
+  --accent: 99 102 241;      /* indigo-500 */
+  --accent-hex: #6366f1;
+  --surface: rgba(99,102,241,0.08);
+  --surface-border: rgba(99,102,241,0.20);
+  --surface-hover: rgba(99,102,241,0.15);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.75);
+  --text-muted: rgba(255,255,255,0.50);
+  --nav-bg: rgba(15,10,30,0.7);
+  --modal-bg: rgba(15,10,30,0.95);
+  --modal-overlay: rgba(15,10,30,0.6);
 }
 
 body {
-  background-color: #0b1b2b;
+  background-color: var(--bg-solid);
   background-image:
     radial-gradient(rgba(var(--texture-color) / 0.04) 1px, transparent 1px),
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
   background-size: 24px 24px, 100% 100%;
   background-attachment: fixed, fixed;
+  transition: background-color 0.5s ease, background-image 0.5s ease;
 }
 
-/* Ensure <option> text is readable on dark selects (browser-dependent) */
+/* Accent utility classes */
+.accent-text { color: rgb(var(--accent)); }
+.accent-bg { background-color: rgb(var(--accent)); }
+.accent-border { border-color: rgb(var(--accent) / 0.3); }
+.accent-glow { box-shadow: 0 0 20px rgb(var(--accent) / 0.15); }
+
+/* Ensure <option> text is readable on dark selects */
 select option {
-  background-color: #0b1b2b;
+  background-color: var(--bg-solid);
   color: #ffffff;
 }
