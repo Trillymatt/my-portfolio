@@ -72,9 +72,9 @@ export function ModeSwitch() {
         }}
       />
 
-      {/* Pulse ring on hover */}
+      {/* Pulse ring on hover/tap */}
       <span
-        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300"
         style={{
           boxShadow: isBusiness
             ? "0 0 20px rgba(6,182,212,0.2), inset 0 0 20px rgba(6,182,212,0.05)"

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useMode } from "@/context/mode-context"
 
@@ -58,6 +59,29 @@ export function GitHubActivity({ repos, profile, contributions }: GitHubActivity
   const isBusiness = mode === "business"
   const levelColors = isBusiness ? LEVEL_COLORS_CYAN : LEVEL_COLORS_INDIGO
 
+  // Responsive: show fewer weeks on smaller screens
+  const [visibleWeeks, setVisibleWeeks] = useState(contributions.length)
+
+  useEffect(() => {
+    const updateWeeks = () => {
+      const width = window.innerWidth
+      if (width < 480) {
+        setVisibleWeeks(20) // ~5 months on small phones
+      } else if (width < 640) {
+        setVisibleWeeks(26) // ~6 months on larger phones
+      } else if (width < 768) {
+        setVisibleWeeks(36) // ~9 months on tablets
+      } else {
+        setVisibleWeeks(contributions.length) // full year on desktop
+      }
+    }
+    updateWeeks()
+    window.addEventListener("resize", updateWeeks)
+    return () => window.removeEventListener("resize", updateWeeks)
+  }, [contributions.length])
+
+  const displayedContributions = contributions.slice(-visibleWeeks)
+
   return (
     <section id="github" className="w-full max-w-6xl mx-auto px-4 py-14">
       <motion.h2
@@ -79,7 +103,7 @@ export function GitHubActivity({ repos, profile, contributions }: GitHubActivity
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="rounded-2xl border p-6 mb-6 overflow-x-auto"
+        className="rounded-2xl border p-4 sm:p-6 mb-6"
         style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
       >
         <div className="flex items-center justify-between mb-4">
@@ -87,17 +111,17 @@ export function GitHubActivity({ repos, profile, contributions }: GitHubActivity
             Contribution Activity
           </p>
           {profile && (
-            <div className="flex items-center gap-4 text-xs" style={{ color: "var(--text-muted)" }}>
+            <div className="flex items-center gap-3 sm:gap-4 text-xs" style={{ color: "var(--text-muted)" }}>
               <span>{profile.public_repos} repos</span>
               <span>{profile.followers} followers</span>
             </div>
           )}
         </div>
 
-        {/* Heatmap grid */}
-        <div className="flex gap-[3px] min-w-[720px]">
-          {contributions.map((week, wi) => (
-            <div key={wi} className="flex flex-col gap-[3px]">
+        {/* Heatmap grid - responsive: cells + gap scale with available space */}
+        <div className="flex gap-[2px] sm:gap-[3px] justify-center">
+          {displayedContributions.map((week, wi) => (
+            <div key={wi} className="flex flex-col gap-[2px] sm:gap-[3px]">
               {week.map((level, di) => (
                 <motion.div
                   key={`${wi}-${di}`}
@@ -109,7 +133,7 @@ export function GitHubActivity({ repos, profile, contributions }: GitHubActivity
                     delay: wi * 0.008 + di * 0.01,
                     ease: "easeOut",
                   }}
-                  className="w-[11px] h-[11px] rounded-[2px]"
+                  className="w-[10px] h-[10px] sm:w-[11px] sm:h-[11px] rounded-[2px]"
                   style={{ backgroundColor: levelColors[level] }}
                   title={`Level ${level} contributions`}
                 />
@@ -124,7 +148,7 @@ export function GitHubActivity({ repos, profile, contributions }: GitHubActivity
           {levelColors.map((color, i) => (
             <div
               key={i}
-              className="w-[11px] h-[11px] rounded-[2px]"
+              className="w-[10px] h-[10px] sm:w-[11px] sm:h-[11px] rounded-[2px]"
               style={{ backgroundColor: color }}
             />
           ))}
