@@ -210,7 +210,7 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
               </>
             )}
             <a href="https://github.com/Trillymatt" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" style={{ borderColor: "var(--surface-border)" }}>GitHub</a>
-            <a href="https://www.linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" style={{ borderColor: "var(--surface-border)" }}>LinkedIn</a>
+            <a href="https://linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-md border text-sm hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" style={{ borderColor: "var(--surface-border)" }}>LinkedIn</a>
           </div>
         </div>
       </section>
@@ -231,24 +231,24 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
             <p className="font-semibold accent-text">Languages</p>
             <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
               {isBusiness
-                ? "JavaScript/TypeScript, Python, SQL"
-                : "JavaScript, Python, Java, C++, SQL, Swift/SwiftUI, HTML"}
+                ? "JavaScript/TypeScript, Python, Swift, SQL"
+                : "JavaScript/TypeScript, Python, Swift/SwiftUI, Java, C++, SQL, HTML/CSS, Bash"}
             </p>
           </div>
           <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
             <p className="font-semibold accent-text">Frameworks & Tools</p>
             <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
               {isBusiness
-                ? "React, Next.js, Node.js"
-                : "React, Next.js, Node.js, Django, RESTful APIs"}
+                ? "React, Next.js, Node.js, Tailwind CSS, Framer Motion"
+                : "React, Next.js, Node.js, Django, Express.js, Tailwind CSS, SwiftData, Xcode, RESTful APIs"}
             </p>
           </div>
           <div className="rounded-2xl border p-5 accent-glow" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}>
-            <p className="font-semibold accent-text">{isBusiness ? "Tools & Testing" : "Practices & Certifications"}</p>
+            <p className="font-semibold accent-text">{isBusiness ? "Development & Testing" : "Practices & Certifications"}</p>
             <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
               {isBusiness
-                ? "Git, CI/CD, Jest/RTL, Analytics"
-                : "Git, CI/CD, Unit Testing, AWS, Agile/Scrum (PSM I)"}
+                ? "Git/GitHub, CI/CD, Jest/RTL, Vercel, Performance Optimization"
+                : "Git/GitHub, CI/CD, Unit Testing, AWS, Docker, Agile/Scrum (PSM I), Code Review"}
             </p>
           </div>
         </div>
@@ -578,23 +578,23 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
             key={mode}
             words={
               isBusiness
-                ? "I am a Computer Science student at the University of North Texas, graduating in May 2026. I'm passionate about entrepreneurship and building practical, high-quality software. Outside of class and client work, I'm a proud parent to a 10-month-old, which keeps me focused, organized, and driven to deliver meaningful results."
-                : "I'm a Computer Science student at the University of North Texas (3.5 GPA) with two Apple engineering experiences under my belt. From building AI-powered code analysis tools on the Watch team to performance testing SwiftData, I've shipped real impact at scale. I also co-founded ColorStack UNT and build production web apps for clients. I'm graduating May 2026 and seeking full-time software engineering roles."
+                ? "I am a Computer Science student at the University of North Texas, graduating in May 2026. I'm passionate about entrepreneurship and building practical, high-quality software. With experience from two Apple internships and freelance web development, I bring both big-tech engineering practices and entrepreneurial agility to every project. Outside of class and client work, I'm a proud parent to a 10-month-old, which keeps me focused, organized, and driven to deliver meaningful results."
+                : "I'm a Computer Science student at the University of North Texas (3.5 GPA) with two Apple engineering internships under my belt. From building AI-powered code analysis tools and automating workflows on the Watch team to performance testing and debugging SwiftData, I've shipped real impact at scale. I specialize in full-stack development with React/Next.js, TypeScript, Python, and Swift. I also co-founded ColorStack UNT, earned IBM Full Stack and PSM I certifications, and build production web apps for clients. I'm graduating May 2026 and seeking full-time software engineering roles where I can contribute to meaningful products and grow as an engineer."
             }
           />
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {isBusiness ? (
             <>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What I Do</p><p style={{ color: "var(--text-secondary)" }}>Design, develop, and deploy high-quality web experiences with React/Next.js.</p></div>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Strategy-first, mobile-friendly, performance-focused. Clean code and clear comms.</p></div>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What You Get</p><p style={{ color: "var(--text-secondary)" }}>Fast, SEO-ready, and tailored to your brand and goals.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What I Do</p><p style={{ color: "var(--text-secondary)" }}>Design, develop, and deploy high-quality web experiences with React, Next.js, TypeScript, and modern frameworks. From custom websites to full-featured web applications.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Strategy-first, mobile-friendly, performance-focused. Leveraging best practices from Apple and enterprise development. Clean code, thorough testing, and clear communication.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">What You Get</p><p style={{ color: "var(--text-secondary)" }}>Fast, accessible, SEO-ready solutions tailored to your brand and business goals. Responsive design, analytics integration, and ongoing support.</p></div>
             </>
           ) : (
             <>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">Industry Experience</p><p style={{ color: "var(--text-secondary)" }}>Two Apple engineering roles spanning Watch software and SwiftData, plus production freelance work with React, Next.js, and TypeScript.</p></div>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Agile/Scrum certified (PSM I), collaborative, and deadline-driven. I write clean, well-tested code and communicate proactively.</p></div>
-              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">Leadership</p><p style={{ color: "var(--text-secondary)" }}>Co-founded ColorStack UNT, MLT Career Prep Fellow, and mentored students. I lead with empathy and accountability.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">Industry Experience</p><p style={{ color: "var(--text-secondary)" }}>Two Apple engineering internships spanning Watch software and SwiftData teams, plus production freelance work. Proficient in React, Next.js, TypeScript, Python, Swift, and full-stack development with modern tooling.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">How I Work</p><p style={{ color: "var(--text-secondary)" }}>Agile/Scrum certified (PSM I), collaborative, and deadline-driven. I write clean, well-tested, maintainable code. Experienced with Git workflows, CI/CD pipelines, code reviews, and cross-functional collaboration.</p></div>
+              <div className="rounded-lg border p-5" style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}><p className="text-xl font-semibold mb-2 accent-text">Leadership</p><p style={{ color: "var(--text-secondary)" }}>Co-founded ColorStack UNT (43+ members), MLT Career Prep Fellow, and active mentor. I lead with empathy, accountability, and a focus on building inclusive tech communities.</p></div>
             </>
           )}
         </div>
