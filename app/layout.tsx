@@ -46,13 +46,13 @@ export default function RootLayout({
           <SiteHeader />
           <Analytics />
           <SpeedInsights />
-          <footer className="mt-20 border-t" style={{ borderColor: "var(--surface-border)" }}>
+          <footer className="mt-20 mb-24 border-t" style={{ borderColor: "var(--surface-border)" }}>
             <div className="mx-auto w-full max-w-7xl px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
               <p style={{ color: "var(--text-muted)" }}>&copy; {new Date().getFullYear()} Matthew Norman</p>
-              <div className="flex items-center gap-4">
-                <a href="/MatthewNorman_FS.pdf" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Resume</a>
-                <a href="https://github.com/Trillymatt" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">GitHub</a>
-                <a href="https://www.linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">LinkedIn</a>
+              <div className="flex items-center gap-4" style={{ color: "var(--text-secondary)" }}>
+                <a href="/MatthewNorman_FS.pdf" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-white">Resume</a>
+                <a href="https://github.com/Trillymatt" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-white">GitHub</a>
+                <a href="https://www.linkedin.com/in/matthewknorman" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-white">LinkedIn</a>
               </div>
             </div>
           </footer>
