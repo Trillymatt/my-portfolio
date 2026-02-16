@@ -60,11 +60,22 @@ body {
 .accent-bg { background-color: rgb(var(--accent)); }
 .accent-border { border-color: rgb(var(--accent) / 0.3); }
 .accent-glow { box-shadow: 0 0 20px rgb(var(--accent) / 0.15); }
+.accent-glow-hover:hover { box-shadow: 0 0 24px rgb(var(--accent) / 0.12); border-color: rgb(var(--accent) / 0.25) !important; }
 
 /* Ensure <option> text is readable on dark selects */
 select option {
   background-color: var(--bg-solid);
   color: #ffffff;
+}
+
+/* Focus ring uses accent color instead of default browser blue */
+*:focus-visible {
+  --tw-ring-color: rgb(var(--accent) / 0.5);
+  outline: none;
+}
+input:focus, textarea:focus, select:focus {
+  --tw-ring-color: rgb(var(--accent) / 0.5);
+  border-color: rgb(var(--accent) / 0.4) !important;
 }
 
 /* === VIEW TRANSITIONS: Expanding circle on mode switch === */

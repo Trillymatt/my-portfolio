@@ -113,9 +113,9 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
   const activeFaqs = isBusiness ? faqs : professionalFaqs
 
   return (
-    <main className="flex min-h-screen flex-col text-white pb-16">
+    <main className="flex min-h-screen flex-col text-white pb-24">
       {/* Hero */}
-      <section id="home" className="w-full max-w-7xl mx-auto px-4 py-14">
+      <section id="home" className="w-full max-w-7xl mx-auto px-4 pt-20 pb-14">
         <div className="flex flex-col items-center justify-center space-y-10">
           <motion.h1
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -526,7 +526,7 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.05 }}
-              className="rounded-2xl border overflow-hidden transition hover:scale-[1.02]"
+              className="rounded-2xl border overflow-hidden transition-all duration-200 hover:scale-[1.02] accent-glow-hover"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--surface-border)" }}
             >
               {p.image && (
@@ -658,7 +658,7 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
                 <h3 id="contact-title" className="text-xl font-semibold">
                   {isBusiness ? "Tell me about your project" : "Let's connect"}
                 </h3>
-                <button aria-label="Close" className="text-white/60 hover:text-white" onClick={() => setIsContactOpen(false)}>x</button>
+                <button aria-label="Close" className="text-white/60 hover:text-white text-xl leading-none px-1 rounded hover:bg-white/10 transition-colors" onClick={() => setIsContactOpen(false)}>&times;</button>
               </div>
               <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
                 {isBusiness
@@ -772,7 +772,7 @@ export function HomePage({ githubProfile, githubRepos, githubContributions }: Ho
             <details key={mode + idx} className="group" style={{ borderColor: "var(--surface-border)" }}>
               <summary className="cursor-pointer list-none p-5 flex items-start justify-between gap-4">
                 <span className="font-medium" style={{ color: "var(--text-secondary)" }}>{item.q}</span>
-                <span className="group-open:rotate-180 transition-transform" style={{ color: "var(--text-muted)" }}>&#8964;</span>
+                <svg className="w-4 h-4 shrink-0 group-open:rotate-180 transition-transform" style={{ color: "var(--text-muted)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </summary>
               <div className="px-5 pb-5 pt-0" style={{ color: "var(--text-secondary)" }}>
                 {item.a}

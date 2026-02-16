@@ -32,7 +32,7 @@ export function ModeSwitch() {
     <button
       ref={buttonRef}
       onClick={handleToggle}
-      className="relative flex items-center gap-0 rounded-full p-1 transition-colors duration-500 border group"
+      className="relative flex items-center gap-0 rounded-full p-1 transition-colors duration-500 border group min-w-[200px]"
       style={{
         backgroundColor: isBusiness ? "rgba(6,182,212,0.1)" : "rgba(99,102,241,0.1)",
         borderColor: isBusiness ? "rgba(6,182,212,0.3)" : "rgba(99,102,241,0.4)",
@@ -41,7 +41,7 @@ export function ModeSwitch() {
     >
       {/* Business label */}
       <span
-        className={`relative z-10 flex items-center justify-center text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${
+        className={`relative z-10 flex-1 text-center text-xs font-medium py-1.5 rounded-full transition-all duration-300 ${
           isBusiness ? "text-white" : "text-white/40"
         }`}
       >
@@ -50,7 +50,7 @@ export function ModeSwitch() {
 
       {/* Professional label */}
       <span
-        className={`relative z-10 flex items-center justify-center text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${
+        className={`relative z-10 flex-1 text-center text-xs font-medium py-1.5 rounded-full transition-all duration-300 ${
           !isBusiness ? "text-white" : "text-white/40"
         }`}
       >
@@ -64,7 +64,7 @@ export function ModeSwitch() {
         className="absolute top-1 bottom-1 rounded-full"
         style={{
           left: isBusiness ? "4px" : "calc(50%)",
-          width: isBusiness ? "calc(50% - 4px)" : "calc(50% - 4px)",
+          width: "calc(50% - 4px)",
           backgroundColor: isBusiness ? "rgba(6,182,212,0.3)" : "rgba(99,102,241,0.4)",
           boxShadow: isBusiness
             ? "0 0 12px rgba(6,182,212,0.3)"
