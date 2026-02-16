@@ -41,7 +41,7 @@ export function ModeSwitch() {
     >
       {/* Business label */}
       <span
-        className={`relative z-10 text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${
+        className={`relative z-10 flex items-center justify-center text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${
           isBusiness ? "text-white" : "text-white/40"
         }`}
       >
@@ -50,7 +50,7 @@ export function ModeSwitch() {
 
       {/* Professional label */}
       <span
-        className={`relative z-10 text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${
+        className={`relative z-10 flex items-center justify-center text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${
           !isBusiness ? "text-white" : "text-white/40"
         }`}
       >
