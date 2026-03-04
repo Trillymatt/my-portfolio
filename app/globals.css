@@ -6,43 +6,43 @@ html { scroll-behavior: smooth; }
 
 /* === DUAL MODE THEME SYSTEM === */
 
-/* Business mode: dark background, cyan accent */
+/* Business mode: dark background, orange accent */
 :root,
 [data-mode="business"] {
-  --bg-start: #0b1b2b;
-  --bg-end: #071320;
-  --bg-solid: #0b1b2b;
+  --bg-start: #1c0f00;
+  --bg-end: #110900;
+  --bg-solid: #1c0f00;
   --texture-color: 255 255 255;
-  --accent: 6 182 212;       /* cyan-500 */
-  --accent-hex: #06b6d4;
-  --surface: rgba(255,255,255,0.05);
-  --surface-border: rgba(255,255,255,0.10);
-  --surface-hover: rgba(255,255,255,0.10);
+  --accent: 249 115 22;      /* orange-500 */
+  --accent-hex: #f97316;
+  --surface: rgba(249,115,22,0.08);
+  --surface-border: rgba(249,115,22,0.20);
+  --surface-hover: rgba(249,115,22,0.15);
   --text-primary: #ffffff;
   --text-secondary: rgba(255,255,255,0.70);
   --text-muted: rgba(255,255,255,0.50);
-  --nav-bg: rgba(7,19,32,0.6);
-  --modal-bg: rgba(7,19,32,0.95);
-  --modal-overlay: rgba(7,19,32,0.6);
+  --nav-bg: rgba(28,15,0,0.6);
+  --modal-bg: rgba(28,15,0,0.95);
+  --modal-overlay: rgba(28,15,0,0.6);
 }
 
-/* Professional mode: accent-rich background, indigo accent */
+/* Professional mode: dark background, blue accent */
 [data-mode="professional"] {
-  --bg-start: #0f0a1e;
-  --bg-end: #0a0618;
-  --bg-solid: #0f0a1e;
-  --texture-color: 139 92 246;
-  --accent: 99 102 241;      /* indigo-500 */
-  --accent-hex: #6366f1;
-  --surface: rgba(99,102,241,0.08);
-  --surface-border: rgba(99,102,241,0.20);
-  --surface-hover: rgba(99,102,241,0.15);
+  --bg-start: #00071c;
+  --bg-end: #000411;
+  --bg-solid: #00071c;
+  --texture-color: 59 130 246;
+  --accent: 59 130 246;      /* blue-500 */
+  --accent-hex: #3b82f6;
+  --surface: rgba(59,130,246,0.08);
+  --surface-border: rgba(59,130,246,0.20);
+  --surface-hover: rgba(59,130,246,0.15);
   --text-primary: #ffffff;
   --text-secondary: rgba(255,255,255,0.75);
   --text-muted: rgba(255,255,255,0.50);
-  --nav-bg: rgba(15,10,30,0.7);
-  --modal-bg: rgba(15,10,30,0.95);
-  --modal-overlay: rgba(15,10,30,0.6);
+  --nav-bg: rgba(0,7,28,0.7);
+  --modal-bg: rgba(0,7,28,0.95);
+  --modal-overlay: rgba(0,7,28,0.6);
 }
 
 body {
