@@ -34,8 +34,8 @@ export function ModeSwitch() {
       onClick={handleToggle}
       className="relative flex items-center gap-0 rounded-full p-1 transition-colors duration-500 border group min-w-[200px]"
       style={{
-        backgroundColor: isBusiness ? "rgba(6,182,212,0.1)" : "rgba(99,102,241,0.1)",
-        borderColor: isBusiness ? "rgba(6,182,212,0.3)" : "rgba(99,102,241,0.4)",
+        backgroundColor: isBusiness ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.04)",
+        borderColor: isBusiness ? "rgba(255,255,255,0.20)" : "rgba(255,255,255,0.15)",
       }}
       aria-label={`Switch to ${isBusiness ? "professional" : "business"} mode`}
     >
@@ -65,10 +65,10 @@ export function ModeSwitch() {
         style={{
           left: isBusiness ? "4px" : "calc(50%)",
           width: "calc(50% - 4px)",
-          backgroundColor: isBusiness ? "rgba(6,182,212,0.3)" : "rgba(99,102,241,0.4)",
+          backgroundColor: isBusiness ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.16)",
           boxShadow: isBusiness
-            ? "0 0 12px rgba(6,182,212,0.3)"
-            : "0 0 12px rgba(99,102,241,0.3)",
+            ? "0 0 12px rgba(255,255,255,0.18)"
+            : "0 0 12px rgba(255,255,255,0.12)",
         }}
       />
 
@@ -77,8 +77,8 @@ export function ModeSwitch() {
         className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300"
         style={{
           boxShadow: isBusiness
-            ? "0 0 20px rgba(6,182,212,0.2), inset 0 0 20px rgba(6,182,212,0.05)"
-            : "0 0 20px rgba(99,102,241,0.2), inset 0 0 20px rgba(99,102,241,0.05)",
+            ? "0 0 20px rgba(255,255,255,0.12), inset 0 0 20px rgba(255,255,255,0.04)"
+            : "0 0 20px rgba(255,255,255,0.08), inset 0 0 20px rgba(255,255,255,0.03)",
         }}
       />
     </button>

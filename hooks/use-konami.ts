@@ -27,7 +27,7 @@ function fireConfetti() {
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ["#06b6d4", "#6366f1", "#f59e0b", "#ef4444", "#22c55e"],
+      colors: ["#ffffff", "#e5e7eb", "#9ca3af", "#6b7280", "#374151"],
     })
     // Side bursts with slight delay
     setTimeout(() => {
@@ -36,14 +36,14 @@ function fireConfetti() {
         angle: 60,
         spread: 55,
         origin: { x: 0, y: 0.65 },
-        colors: ["#06b6d4", "#6366f1", "#f59e0b"],
+        colors: ["#ffffff", "#d1d5db", "#9ca3af"],
       })
       confetti({
         particleCount: 60,
         angle: 120,
         spread: 55,
         origin: { x: 1, y: 0.65 },
-        colors: ["#06b6d4", "#6366f1", "#ef4444"],
+        colors: ["#ffffff", "#e5e7eb", "#6b7280"],
       })
     }, 200)
   })
