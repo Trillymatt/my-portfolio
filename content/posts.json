@@ -1,0 +1,86 @@
+[
+  {
+    "slug": "lessons-from-my-first-apple-internship",
+    "title": "Lessons From My First Apple Internship",
+    "date": "2024-12-02",
+    "readTime": "5 min read",
+    "tags": ["Apple", "Career", "SwiftData"],
+    "excerpt": "Reflecting on six months on the SwiftData team at Apple - the engineering culture, the standards, and what I learned about shipping software at scale.",
+    "body": [
+      "Last fall I wrapped my first internship at Apple as a SwiftData engineer in the Cocoa organization. Coming in as a junior at the University of North Texas, I expected to spend most of my time heads-down on tickets. What I didn't expect was how much I'd learn about the culture, the standards, and the cadence required to ship software that runs on hundreds of millions of devices.",
+      "My core project was performance testing the SwiftData framework. I helped resolve six bugs and shipped six comprehensive unit tests for the SampleTrips app that the team uses to validate framework adoption. Each bug taught me something - not just about the framework internals, but about how to reproduce, isolate, and write up a problem so a senior engineer could pick it up cold and trust your analysis.",
+      "Three lessons stuck with me. First, alignment beats velocity. The most useful thing I did each week wasn't a commit - it was the 1:1 with my manager where we made sure I was aimed at the right target. Second, write the bug report you wish you'd received. Reproduction steps, environment, expected vs. actual, and a hypothesis. Third, the bar for 'done' is higher than you think - and that's a gift. Code review at Apple is patient, specific, and relentlessly focused on the reader who will inherit the code.",
+      "I'm carrying that bar forward into my second internship and every freelance project I take on. If you're a student thinking about applying, my honest advice is: optimize for learning, not for the resume line. The line will come."
+    ]
+  },
+  {
+    "slug": "building-ai-code-review-tools-at-apple",
+    "title": "Building AI-Powered Code Review Tools at Apple",
+    "date": "2025-08-22",
+    "readTime": "6 min read",
+    "tags": ["Apple", "AI", "Developer Tools"],
+    "excerpt": "How I built an AI-powered code analysis system on the Watch software team that flagged potential issues during reviews and lifted bug-detection by 35%.",
+    "body": [
+      "This past summer I returned to Apple, this time as a Watch software engineering intern. My project: bridge GitHub with Apple's internal bug reporting tool, then layer an AI analysis pass on top so reviewers see relevant context inline.",
+      "The first half was integration work. I wrote a script that watches incoming pull requests and matches the changes against the bug database, posting a comment with the most likely related issues. Sounds simple, but the matching logic is where the value lives - false positives erode trust quickly, so I spent most of my time tuning signal-to-noise rather than adding features.",
+      "The second half was the AI layer. I built a system that runs alongside human reviewers, flagging potential issues in changed files - missed nil checks, suspicious concurrency, regressions against patterns the team had already fixed. The team reported a 35% increase in bug detection during reviews where the tool was active. The more interesting result, to me, was the qualitative one: reviewers stopped re-reading the same kinds of mistakes and could focus on architecture and design.",
+      "What I took away: developer tools live or die on latency and trust. If the comment shows up after the PR has merged, no one cares. If it cries wolf, no one reads it. Build the slow, careful version first, then optimize toward the version that's fast enough to be useful."
+    ]
+  },
+  {
+    "slug": "from-freelance-to-apple",
+    "title": "From Freelance Developer to Apple Intern",
+    "date": "2025-01-14",
+    "readTime": "4 min read",
+    "tags": ["Career", "Freelance", "Student Life"],
+    "excerpt": "How taking on freelance clients in college prepared me - in ways I didn't expect - for shipping real software at Apple.",
+    "body": [
+      "I started taking on freelance web projects in 2023, mostly small business sites built in Next.js and Tailwind. At the time it felt like a side hustle. Looking back, it was probably the single most valuable thing I did for my early career.",
+      "Freelance forced me to own the full loop. Scoping a project with a client who doesn't speak in tickets. Estimating timelines for things I'd never built. Saying no to scope creep without burning the relationship. Shipping something that actually had to work on Monday morning. None of those show up in a data structures lecture.",
+      "When I landed my first Apple internship, the technical parts were challenging - SwiftData was new, the codebase was huge - but the project management muscle from freelance was already trained. I knew how to ask the right question, how to scope down, how to manage up when I was blocked.",
+      "If you're a CS student trying to figure out what to do with your summer before your first real internship: take on one paying client. Charge a fair price. Ship it. The growth compounds."
+    ]
+  },
+  {
+    "slug": "co-founding-colorstack-unt",
+    "title": "Why I Co-founded ColorStack at UNT",
+    "date": "2024-09-18",
+    "readTime": "5 min read",
+    "tags": ["Leadership", "Community", "ColorStack"],
+    "excerpt": "Building a tech community from zero at the University of North Texas - lessons in leadership, sponsorship, and showing up for the next student in the door.",
+    "body": [
+      "In July 2024 I co-founded the ColorStack chapter at the University of North Texas with a small team of E-board members. We started with an empty Discord and a list of names. A year later we're 43 members strong, with four professional development events and a 92% satisfaction rating from attendees.",
+      "Most of the work is boring in the best way. Booking rooms. Following up on sponsorships. Writing event recaps so the next person knows what worked. The visible work - the speaker series, the resume reviews, the mentorship pairings - rests on a foundation of unglamorous logistics, and I learned to love that part.",
+      "The most rewarding piece has been mentoring students new to UNT. I've sat with five mentees over the past year, mostly first-gen CS students figuring out internships and interviewing. Watching them go from 'I don't know if I belong here' to landing offers has reframed what I think a career in tech is for.",
+      "If you're a student on a campus without a chapter, start one. The bar to entry is much lower than it looks, and the impact compounds before you graduate."
+    ]
+  },
+  {
+    "slug": "getting-psm-i-certified-as-a-cs-student",
+    "title": "Getting Scrum-Certified as a CS Student",
+    "date": "2024-06-05",
+    "readTime": "3 min read",
+    "tags": ["Certifications", "Agile", "Scrum"],
+    "excerpt": "Why I sat for the Professional Scrum Master I exam while still in school, and how it changed how I run my own freelance projects.",
+    "body": [
+      "I sat for the Professional Scrum Master I (PSM I) exam during a quiet stretch between semesters. The decision was practical: I wanted vocabulary I could use confidently in interviews, and I wanted a more structured way to run my freelance projects.",
+      "The certification itself is straightforward - the Scrum Guide is 13 pages, and most of the test is checking whether you understand what's in it rather than what people post on LinkedIn about agile. The real value came after, when I started applying the framework to my own work.",
+      "I now run two-week iterations on freelance projects with a written goal, a small backlog, and a real retrospective at the end. Even on solo work, the discipline of asking 'what did I actually finish, what slipped, and why' beats any productivity hack I've tried.",
+      "If you're a student considering it, the time-to-value is high. Read the guide, take the practice tests, sit for the exam. You'll come out with a vocabulary that translates directly into how engineering teams actually work."
+    ]
+  },
+  {
+    "slug": "what-the-ibm-full-stack-certificate-taught-me",
+    "title": "What the IBM Full Stack Certificate Actually Taught Me",
+    "date": "2026-01-28",
+    "readTime": "4 min read",
+    "tags": ["Certifications", "Full Stack", "Cloud"],
+    "excerpt": "I just finished the IBM Full Stack Software Developer Professional Certificate. Here's an honest breakdown of which modules moved the needle and which I'd skip.",
+    "body": [
+      "I wrapped the IBM Full Stack Software Developer Professional Certificate this month. It covers a wide arc - cloud computing, front-end development, CI/CD, AWS, unit testing - and I want to share an honest read on what was worth the time.",
+      "The strongest sections were the cloud and CI/CD modules. Setting up pipelines, working with containers, and reasoning about deployment topology are skills that translate directly into real work. I caught myself reaching for the patterns from that module on my next freelance build.",
+      "The weakest sections, for me, were the introductory front-end modules. If you've already built a couple of React apps, you'll move through them quickly and won't pick up much. That's not a knock on the program - they're aimed at a broader audience than working engineers.",
+      "Net verdict: worth it if you want a structured tour of the modern web stack with an explicit cloud lens. Pair it with shipping a real project on AWS, and you'll come out with both the language and the receipts to talk credibly about full-stack work."
+    ]
+  }
+]

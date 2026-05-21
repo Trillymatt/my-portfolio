@@ -25,20 +25,20 @@ interface GitHubActivityProps {
   contributions: number[][]
 }
 
-const LEVEL_COLORS_CYAN = [
-  "rgba(6,182,212,0.05)",
-  "rgba(6,182,212,0.25)",
-  "rgba(6,182,212,0.45)",
-  "rgba(6,182,212,0.65)",
-  "rgba(6,182,212,0.9)",
+const LEVEL_COLORS_BUSINESS = [
+  "rgba(255,255,255,0.05)",
+  "rgba(255,255,255,0.20)",
+  "rgba(255,255,255,0.40)",
+  "rgba(255,255,255,0.65)",
+  "rgba(255,255,255,0.90)",
 ]
 
-const LEVEL_COLORS_INDIGO = [
-  "rgba(99,102,241,0.05)",
-  "rgba(99,102,241,0.25)",
-  "rgba(99,102,241,0.45)",
-  "rgba(99,102,241,0.65)",
-  "rgba(99,102,241,0.9)",
+const LEVEL_COLORS_PROFESSIONAL = [
+  "rgba(255,255,255,0.04)",
+  "rgba(255,255,255,0.16)",
+  "rgba(255,255,255,0.32)",
+  "rgba(255,255,255,0.55)",
+  "rgba(255,255,255,0.80)",
 ]
 
 const LANGUAGE_COLORS: Record<string, string> = {
@@ -57,7 +57,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
 export function GitHubActivity({ repos, profile, contributions }: GitHubActivityProps) {
   const { mode } = useMode()
   const isBusiness = mode === "business"
-  const levelColors = isBusiness ? LEVEL_COLORS_CYAN : LEVEL_COLORS_INDIGO
+  const levelColors = isBusiness ? LEVEL_COLORS_BUSINESS : LEVEL_COLORS_PROFESSIONAL
 
   // Responsive: show fewer weeks on smaller screens
   const [visibleWeeks, setVisibleWeeks] = useState(contributions.length)

@@ -9,9 +9,9 @@ export async function GET(request: NextRequest) {
   const description = searchParams.get("desc") ?? "Software Engineer & Entrepreneur"
   const mode = searchParams.get("mode") ?? "business"
 
-  const accentColor = mode === "professional" ? "#6366f1" : "#06b6d4"
-  const bgColor = mode === "professional" ? "#0f0a1e" : "#0b1b2b"
-  const accentGlow = mode === "professional" ? "rgba(99,102,241,0.3)" : "rgba(6,182,212,0.3)"
+  const accentColor = mode === "professional" ? "#d1d5db" : "#e5e7eb"
+  const bgColor = mode === "professional" ? "#0a0a0a" : "#141414"
+  const accentGlow = mode === "professional" ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.22)"
 
   return new ImageResponse(
     (
